@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { createStore } from 'redux'
+import './App.css'
+import {  
+  BrowserRouter as Router,
+  Switch,
+  Route,    
+} from 'react-router-dom'
+import Cards from './components/CardsPage'
+import Home from './components/HomePage'
+import Shop from './components/ShopPage'
+import Mining from './components/MiningPage'
+import NavBar from './components/NavBar'
+import { Provider } from 'react-redux'
+
+import reducer from './reducers'
+
+const store = createStore(reducer)
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Provider store={store}>
+      
+      <Router>
+        <NavBar></NavBar>
+        <Switch>
+          <Route exact path="/">
+            <div><Home/></div>
+          </Route>
+          <Route exact path="/Cards">
+            <div><Cards/></div>
+          </Route>
+          <Route exact path="/Shop">
+            <div><Shop/></div>
+          </Route>
+          <Route exact path="/Mining">
+            <div><Mining/></div>
+          </Route>
+        </Switch>
+      </Router>
+    </Provider>
+  )
 }
 
-export default App;
+export default App
