@@ -9,8 +9,8 @@ const NavBar = () => {
         <Link to="/Cards">Cards</Link>
         <Link to="/Shop">Shop</Link>
         <Link to="/Mining">Mining</Link>
-        <a>x Pokecoins</a>
-      </div> 
+        <p>x Pokecoins</p>
+      </div>
     );
 }
 
