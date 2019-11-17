@@ -1,5 +1,4 @@
 import React from 'react'
-import { createStore } from 'redux'
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,36 +9,30 @@ import Home from './HomePage'
 import Shop from './ShopPage'
 import Mining from './MiningPage'
 import NavBar from './NavBar'
-import { Provider } from 'react-redux'
-
 import LoginPage from './LoginPage'
-
-import reducer from '../reducers'
-
-const store = createStore(reducer)
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <NavBar />
-        <LoginPage />
-        <Switch>
-          <Route exact path="/">
-            <div><Home/></div>
-          </Route>
-          <Route exact path="/Cards">
-            <div><CardsPage/></div>
-          </Route>
-          <Route exact path="/Shop">
-            <div><Shop/></div>
-          </Route>
-          <Route exact path="/Mining">
-            <div><Mining/></div>
-          </Route>
-        </Switch>
-      </Router>
-    </Provider>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route exact path='/'>
+          <div><Home/></div>
+        </Route>
+        <Route exact path='/cards'>
+          <div><CardsPage/></div>
+        </Route>
+        <Route exact path='/shop'>
+          <div><Shop/></div>
+        </Route>
+        <Route exact path='/mining'>
+          <div><Mining/></div>
+        </Route>
+        <Route path='/login'>
+          <LoginPage />
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 

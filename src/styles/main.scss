@@ -1,7 +1,9 @@
-// Base ----------------------------------------------------- /
-@import "./body";
-@import "./vars";
+// Basics ------------------------------------------------------ //
+@import 'body';
+@import 'vars';
+@import 'functions';
 
-// Components ----------------------------------------------- /
-@import "./login";
-@import "./topnav";
+// Components -------------------------------------------------- //
+@import 'login';
+@import 'topnav';
+@import 'pokeball';

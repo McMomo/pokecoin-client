@@ -1,5 +1,6 @@
-const reducer = (state, action) => {
-    return state
-}
+import {combineReducers} from 'redux'
+import {loginMessageReducer} from './_loginReducer'
 
-export default reducer
+export const reducers = combineReducers({
+    loginMessageReducer
+})
