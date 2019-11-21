@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
-import {loginMessageReducer} from './_loginReducer'
+import {authenticationReducer} from './_authenticationReducer'
 
 export const reducers = combineReducers({
-    loginMessageReducer
+    authenticationReducer
 })

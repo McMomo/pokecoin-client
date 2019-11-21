@@ -1,6 +1,1 @@
-export const loginFailedAction = message => {
-    return {
-        type: 'LOGIN_FAILED',
-        payload: message
-    }
-}
+export * from './_authenticationAction'

@@ -1,8 +1,11 @@
 import React from 'react'
-import { postData, get } from '../helpers/fetch'
+import { useState } from 'react'
 import Pokeball from './PokeBall'
-import {useDispatch, useSelector} from 'react-redux'
-import {loginFailedAction} from '../actions'
+// import {useDispatch, useSelector} from 'react-redux'
+import axios from 'axios'
+import { BASE_URL } from '../helpers/constants'
+import { userService } from '../services'
+import { authenticationActions } from '../actions'
 
 const auth = (e, method) => {
 	e.preventDefault()
@@ -15,56 +18,77 @@ const auth = (e, method) => {
 	// show loader
 	loader.style.display = 'block'
 
-	const URL = method === 'login' ? 
-		'https://rocky-lowlands-35145.herokuapp.com/auth/login' :
-		'https://rocky-lowlands-35145.herokuapp.com/auth/register'
+	const controller = method === 'login' ? 
+		'/auth/login' :
+		'/auth/register'
 
 	const data = {
 		username,
 		password
 	}
 
-	let errmsg = ''
-
-	const result = get(URL, data)
+	const loginResponse = axios.post(BASE_URL + controller, data)
 		.then(response => {
-			console.log("sollte nicht hier sein")
-			console.log(response)
-		})
-		.catch(err => {
-			console.log("BIN HIER")
-			console.error(err.message)
-			errmsg = err.message
-		})
-		.finally(() => {
-			loader.style.display = 'none'
+			if(response.status === 200) return response
+			return ''
 		})
 
-	console.log(loginFailedAction(errmsg))
-	return loginFailedAction(errmsg)
+	console.log(loginResponse)
+	// show loader
+	loader.style.display = 'none'
+
+	return loginResponse
 }
 
 const LoginPage = (props) => {
 
-	const dispatch = useDispatch()
-	const loginMessage = useSelector(state => state.loginMessageReducer)
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+
+	// const dispatch = useDispatch()
+	// const loginMessage = useSelector(state => state.loginMessageReducer)
+
+	const handleChange = e => {
+		const { name, value } = e.target
+		
+		switch (name) {
+			case 'username':
+				setUsername(value)
+				break
+			case 'password':
+				setPassword(value)
+				break
+			default:
+				throw new Error()
+		}
+	}
+
+	const handleSubmit = e => {
+		if (username && password) {
+			userService.login(username, password)
+		}
+	}
 
 	return (
 		<div className='login'>
 			<div className='login__background'></div>
 			<div className='login__form'>
-				<input className='login__input js-username' type='text' placeholder='Username' />
-				<input className='login__input js-password' type='password' placeholder='Password'/>
+				<input className='login__input js-username' type='text' placeholder='Username' name='username' onChange={handleChange} />
+				<input className='login__input js-password' type='password' placeholder='Password' name='password' onChange={handleChange} />
 				
-				<button className='login__button' onClick={e => { dispatch(auth(e, 'login')) }}>Login</button>
-				<button className='login__button--register' onClick={e => { dispatch(auth(e, 'register')) }}>Register</button>
+				<button className='login__button' onClick={handleSubmit}>Login</button>
+				<button className='login__button--register' onClick={e => { auth(e, 'register') }}>Register</button>
 				<div className="login__loader js-loader">
 					<Pokeball />
 				</div>
-				{loginMessage ? <div className="login__error">{loginMessage}</div> : '' }
 			</div>
+
 		</div>
 	)
+}
+
+const actions = {
+	login: authenticationActions.login
 }
 
 export default LoginPage
