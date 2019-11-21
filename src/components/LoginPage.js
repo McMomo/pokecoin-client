@@ -1,5 +1,5 @@
 import React from 'react'
-import { postData } from '../services/fetch'
+import { postData, get } from '../helpers/fetch'
 import Pokeball from './PokeBall'
 import {useDispatch, useSelector} from 'react-redux'
 import {loginFailedAction} from '../actions'
@@ -24,26 +24,23 @@ const auth = (e, method) => {
 		password
 	}
 
-	const result = postData(URL, data)
-
 	let errmsg = ''
 
-	// TODO: funktioniert nicht
-	// result
-	// 	.then(json => {
-	// 		console.log("sollte nicht hier sein")
-	// 		console.log(json)
-	// 	})
-	// 	.catch(err => {
-	// 		console.log("BIN HIER")
-	// 		console.error(err.message)
-	// 		errmsg = err.message
-	// 	})
-	// 	.finally(() => {
-	// 		loader.style.display = 'none'
-	// 	})
+	const result = get(URL, data)
+		.then(response => {
+			console.log("sollte nicht hier sein")
+			console.log(response)
+		})
+		.catch(err => {
+			console.log("BIN HIER")
+			console.error(err.message)
+			errmsg = err.message
+		})
+		.finally(() => {
+			loader.style.display = 'none'
+		})
 
-	// console.log(loginFailedAction(errmsg))
+	console.log(loginFailedAction(errmsg))
 	return loginFailedAction(errmsg)
 }
 
@@ -64,7 +61,7 @@ const LoginPage = (props) => {
 				<div className="login__loader js-loader">
 					<Pokeball />
 				</div>
-				{loginMessage ? <div className="login__error">{loginMessage} Hallo</div> : '' }
+				{loginMessage ? <div className="login__error">{loginMessage}</div> : '' }
 			</div>
 		</div>
 	)
