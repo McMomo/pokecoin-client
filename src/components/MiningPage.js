@@ -30,12 +30,12 @@ const getPrevHash = () => {
 
 const MiningPage = () => {
     
-    const workerInstance = worker()
-    workerInstance.addEventListener('message', (message) => {
-    console.log('New Message: ', message.data)
-    })
+    // const workerInstance = worker()
+    // workerInstance.addEventListener('message', (message) => {
+    // console.log('New Message: ', message.data)
+    // })
 
-    workerInstance.mine(getPrevHash, getDifficulty)
+    // workerInstance.mine(getPrevHash, getDifficulty)
     
     return(
         <div>
