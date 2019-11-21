@@ -24,18 +24,18 @@ const getPrevHash = () => {
     .catch(function (error){
         console.log(error)
     })
-
     return prevHash
 }
 
 const MiningPage = () => {
-    
-    // const workerInstance = worker()
-    // workerInstance.addEventListener('message', (message) => {
-    // console.log('New Message: ', message.data)
-    // })
 
-    // workerInstance.mine(getPrevHash, getDifficulty)
+    const workerInstance = worker()
+    workerInstance.addEventListener('message', (message) => {
+    console.log('New Message: ', message.data)
+    })
+
+    /// TODO: add react use promise or useAsynchEffect
+    workerInstance.mine(getPrevHash(), getDifficulty())
     
     return(
         <div>

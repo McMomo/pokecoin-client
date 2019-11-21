@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { BASE_URL } from '../helpers/constants'
-import { doesNotReject } from 'assert'
 import {useAsyncEffect} from 'use-async-effect'
 
 const fetchCards = async (page) => {
