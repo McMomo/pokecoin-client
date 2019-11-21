@@ -11,13 +11,14 @@ const calculateHash = (block) => {
     return crypto.createHash('sha256').update(information).digest('hex')
 }
 
-const mine = (prevHash, difficulty) => {
+export const mine = (prevHash, difficulty) => {
+    difficulty = 6;
     let timestamp = new Date().getTime()
     let nonce = -1
 
     let newBlock = ''
-    self.postMessage("Hallo Welt")
-    do {
+
+    while (true) {
         if (Number.MAX_SAFE_INTEGER === nonce) {
             nonce = 0
             timestamp = new Date().getTime()
@@ -30,8 +31,9 @@ const mine = (prevHash, difficulty) => {
             data: BLOCK_DATA,
             nonce: nonce
         }
-    } while(calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join('')))
-    self.postMessage(newBlock)
+        if (calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join(''))){
+            self.postMessage(calculateHash(newBlock)) // eslint-disable-line no-restricted-globals
+        }
+    } 
 }
 
-export default mine
