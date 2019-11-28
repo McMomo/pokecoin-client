@@ -1,4 +1,5 @@
 import { BASE_URL } from '../helpers/constants'
+import Cookies from 'js-cookie'
 
 const login = (username, password) => {
 
@@ -8,12 +9,12 @@ const login = (username, password) => {
         body: JSON.stringify({ username, password })
     }
 
-    console.log('gonna fetch now')
-
     return fetch(BASE_URL + '/auth/login', requestOptions)
         .then(handleResponse)
         .then(data => {
-            localStorage.setItem('token', JSON.stringify(data.token))
+            console.log(data.token)
+            Cookies.set('token', data.token, { expires: 1 })
+            console.log('cookie set')
             return data
         })
 }

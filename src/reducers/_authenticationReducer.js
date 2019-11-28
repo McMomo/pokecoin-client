@@ -2,9 +2,10 @@ import { authenticationConstants } from '../helpers/constants'
 import { store } from '../index'
 import { userService } from '../services'
 import { authenticationActions } from '../actions'
+import Cookie from 'js-cookie'
 
 
-let token = JSON.parse(localStorage.getItem('token'))
+let token = Cookie.get('token')
 
 const initialState = token ? { loggedIn: true, token } : { loggedIn: false, token: null }
 
@@ -24,7 +25,7 @@ export const authenticationReducer = (state = initialState, action) => {
         case authenticationConstants.LOGIN_SUCCESS:
             return {
                 loggedIn: true,
-                token: JSON.parse(localStorage.getItem('token'))
+                token: Cookie.get('token')
             }
         case authenticationConstants.LOGIN_FAILURE:
             return initialState
