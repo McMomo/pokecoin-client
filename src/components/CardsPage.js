@@ -19,7 +19,7 @@ const CardsPage = () => {
     }, [])
     
     const cardList = cards.map(card => (
-        <img key={card.name} src={card.imageUrl} />
+        <img key={card.name} src={card.imageUrl} alt={card.name}/>
     ))
 
     console.log(cards)

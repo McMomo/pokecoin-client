@@ -1,55 +1,18 @@
 import React from 'react'
 import { useState } from 'react'
 import Pokeball from './PokeBall'
-// import {useDispatch, useSelector} from 'react-redux'
-import axios from 'axios'
-import { BASE_URL } from '../helpers/constants'
-import { userService } from '../services'
 import { authenticationActions } from '../actions'
-import { useDispatch } from 'react-redux'
-
-const auth = (e, method) => {
-	e.preventDefault()
-
-	const loader = document.querySelector('.js-loader')
-
-	const username = document.querySelector('.js-username').value
-	const password = document.querySelector('.js-password').value
-
-	// show loader
-	loader.style.display = 'block'
-
-	const controller = method === 'login' ? 
-		'/auth/login' :
-		'/auth/register'
-
-	const data = {
-		username,
-		password
-	}
-
-	const loginResponse = axios.post(BASE_URL + controller, data)
-		.then(response => {
-			if(response.status === 200) return response
-			return ''
-		})
-
-	console.log(loginResponse)
-	// show loader
-	loader.style.display = 'none'
-
-	return loginResponse
-}
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
 
 const LoginPage = (props) => {
 
 	const dispatch = useDispatch()
 
+	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-
-	// const dispatch = useDispatch()
-	// const loginMessage = useSelector(state => state.loginMessageReducer)
 
 	const handleChange = e => {
 		const { name, value } = e.target
@@ -74,24 +37,20 @@ const LoginPage = (props) => {
 
 	return (
 		<div className='login'>
+			{loggedIn ? <Redirect to='/cards' /> : ''}
 			<div className='login__background'></div>
 			<div className='login__form'>
 				<input className='login__input js-username' type='text' placeholder='Username' name='username' onChange={handleChange} />
 				<input className='login__input js-password' type='password' placeholder='Password' name='password' onChange={handleChange} />
 				
 				<button className='login__button' onClick={handleSubmit}>Login</button>
-				<button className='login__button--register' onClick={e => { auth(e, 'register') }}>Register</button>
+				<Link className='login__button--register' to='/register'>Register</Link>
 				<div className="login__loader js-loader">
 					<Pokeball />
 				</div>
 			</div>
-
 		</div>
 	)
-}
-
-const actions = {
-	login: authenticationActions.login
 }
 
 export default LoginPage

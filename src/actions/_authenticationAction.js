@@ -9,8 +9,22 @@ const request = (username, password) => {
         } 
     } 
 }
-function success(user) { return { type: authenticationConstants.LOGIN_SUCCESS, user } }
-function failure(error) { return { type: authenticationConstants.LOGIN_FAILURE, error } }
+const success = (token) => {
+    return { 
+        type: authenticationConstants.LOGIN_SUCCESS, 
+        payload: {
+            token
+        }
+    } 
+}
+const failure = (error) => {
+    return {
+        type: authenticationConstants.LOGIN_FAILURE,
+        payload: {
+            error
+        }
+    }
+}
 
 export const authenticationActions = {
     request,
