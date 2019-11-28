@@ -79,21 +79,17 @@
 		}
 
 		&--register {
-			appearance: none;
-			background: transparent;
+			text-decoration: none;
 			color: currentcolor;
-			font: inherit;
-			border-radius: 0;
 			cursor: pointer;
-			outline: none;
 			text-transform: uppercase;
 			font-weight: bold;
-			border: 2px solid color('dark');
 			padding: $gutter/4 0;
 			margin-bottom: $gutter/2;
 			position: relative;
 			border: 0;
 			position: relative;
+			text-align: center;
 
 			&::after {
 				content: '';
