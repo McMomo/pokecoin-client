@@ -14,7 +14,6 @@ const calculateHash = (block) => {
 export const mine = (prevHash, difficulty) => {
     let timestamp = new Date().getTime()
     let nonce = -1
-
     let newBlock = ''
 
     while (true) {
@@ -31,8 +30,8 @@ export const mine = (prevHash, difficulty) => {
             nonce: nonce
         }
         if (calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join(''))){
-            self.postMessage(calculateHash(newBlock)) // eslint-disable-line no-restricted-globals
+            self.postMessage(newBlock) // eslint-disable-line no-restricted-globals
+
         }
     } 
 }
-

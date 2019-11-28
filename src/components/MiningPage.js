@@ -1,13 +1,14 @@
 import React, { useEffect }  from 'react'
 import worker from 'workerize-loader!../helpers/worker' // eslint-disable-line import/no-webpack-loader-syntax
 import {getDifficulty, getPrevHash} from '../services/_miningServices'
-
+import { postNewBlock } from '../services/_miningServices'
 
 const MiningPage = () => {
     async function startMiner(){
         const workerInstance = worker()
         workerInstance.addEventListener('message', (message) => {
             console.log('New Message: ', message.data)
+            if (message.data.type !== "RPC") postNewBlock(message.data)
         })
         
         const prevHash = await getPrevHash()
