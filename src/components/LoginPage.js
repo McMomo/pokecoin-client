@@ -6,6 +6,7 @@ import axios from 'axios'
 import { BASE_URL } from '../helpers/constants'
 import { userService } from '../services'
 import { authenticationActions } from '../actions'
+import { useDispatch } from 'react-redux'
 
 const auth = (e, method) => {
 	e.preventDefault()
@@ -42,6 +43,8 @@ const auth = (e, method) => {
 
 const LoginPage = (props) => {
 
+	const dispatch = useDispatch()
+
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
@@ -65,7 +68,7 @@ const LoginPage = (props) => {
 
 	const handleSubmit = e => {
 		if (username && password) {
-			userService.login(username, password)
+			dispatch(authenticationActions.request(username, password))
 		}
 	}
 
