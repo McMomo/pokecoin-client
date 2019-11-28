@@ -1,4 +1,4 @@
-import * as crypto from 'crypto'
+ import * as crypto from 'crypto'
 import { BLOCK_DATA } from './constants'
 
 const calculateHash = (block) => {
@@ -12,7 +12,6 @@ const calculateHash = (block) => {
 }
 
 export const mine = (prevHash, difficulty) => {
-    difficulty = 6;
     let timestamp = new Date().getTime()
     let nonce = -1
 
