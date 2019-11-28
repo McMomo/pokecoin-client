@@ -13,14 +13,14 @@ const login = (username, password) => {
     return fetch(BASE_URL + '/auth/login', requestOptions)
         .then(handleResponse)
         .then(data => {
-            localStorage.setItem('token', JSON.stringify(data.token));
+            localStorage.setItem('token', JSON.stringify(data.token))
             return data
         })
 }
 
 function handleResponse(response) {
     return response.text().then(text => {
-        const data = text && JSON.parse(text);
+        const data = text && JSON.parse(text)
         if (!response.ok) {
 
             if(response.status === 400) {
@@ -28,11 +28,11 @@ function handleResponse(response) {
             }
 
             const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
+            return Promise.reject(error)
         }
 
-        return data;
-    });
+        return data
+    })
 }
 
 export const userService = {
