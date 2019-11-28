@@ -1,7 +1,7 @@
  import * as crypto from 'crypto'
 import { BLOCK_DATA } from './constants'
 
-const calculateHash = (block) => {
+export const calculateHash = (block) => {
     const information = (
         block.previousHash +
         block.timestamp.toString() +
@@ -31,7 +31,7 @@ export const mine = (prevHash, difficulty) => {
         }
         if (calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join(''))){
             self.postMessage(newBlock) // eslint-disable-line no-restricted-globals
-
+            break
         }
     } 
 }

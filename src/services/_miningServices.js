@@ -1,10 +1,9 @@
 import { BASE_URL } from '../helpers/constants'
+import Cookies from 'js-cookie'
 
 export const postNewBlock = (newBlock) => {
 
-    const token = localStorage.getItem('token')
-
-    console.log(newBlock)
+    const token = Cookies.get('token')
 
     const requestOptions = {
         method: 'POST',
