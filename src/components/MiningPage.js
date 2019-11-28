@@ -1,42 +1,24 @@
-import React from 'react'
-import axios from 'axios'
-import { BASE_URL} from '../helpers/constants'
+import React, { useEffect }  from 'react'
 import worker from 'workerize-loader!../helpers/worker' // eslint-disable-line import/no-webpack-loader-syntax
+import {getDifficulty, getPrevHash} from '../services/_miningServices'
 
-const getDifficulty = () => { 
-    let difficulty = ''
-    axios.get(BASE_URL + '​/blockchain/currentDifficulty')
-    .then(response => {
-        difficulty = response
-    })
-    .catch(error => {
-        console.error(error)
-    })
-    return difficulty
-}
-
-const getPrevHash = () => {
-    let prevHash = '' 
-    axios.get(BASE_URL + '/blockchain/lastBlock')
-    .then(function (response){
-        prevHash = response.hash
-    })
-    .catch(function (error){
-        console.log(error)
-    })
-    return prevHash
-}
 
 const MiningPage = () => {
+    async function startMiner(){
+        const workerInstance = worker()
+        workerInstance.addEventListener('message', (message) => {
+            console.log('New Message: ', message.data)
+        })
+        
+        const prevHash = await getPrevHash()
+        const getDiff = await getDifficulty()
+        workerInstance.mine(prevHash, getDiff)    
+    }
+    useEffect(() => {
+        startMiner()
+        .catch(console.log)
+    }, [])
 
-    const workerInstance = worker()
-    workerInstance.addEventListener('message', (message) => {
-    console.log('New Message: ', message.data)
-    })
-
-    /// TODO: add react use promise or useAsynchEffect
-    workerInstance.mine(getPrevHash(), getDifficulty())
-    
     return(
         <div>
             <p>mining</p>
