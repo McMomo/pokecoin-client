@@ -53,7 +53,7 @@ async function handleResponse(response) {
             console.log('fuck')
         }
 
-        const error = (data && data.message) || response.statusText;
+        const error = (data && data.message) || response.statusText
         throw error
     }
     return data

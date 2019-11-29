@@ -28,7 +28,7 @@ function handleResponse(response) {
                 console.log('fuck')
             }
 
-            const error = (data && data.message) || response.statusText;
+            const error = (data && data.message) || response.statusText
             return Promise.reject(error)
         }
 
@@ -38,4 +38,4 @@ function handleResponse(response) {
 
 export const userService = {
     login
-};
+}

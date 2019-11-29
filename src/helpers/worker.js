@@ -1,4 +1,4 @@
- import * as crypto from 'crypto'
+import * as crypto from 'crypto'
 import { BLOCK_DATA } from './constants'
 
 export const calculateHash = (block) => {
@@ -33,5 +33,5 @@ export const mine = (prevHash, difficulty) => {
             self.postMessage(newBlock) // eslint-disable-line no-restricted-globals
             break
         }
-    } 
+    }
 }

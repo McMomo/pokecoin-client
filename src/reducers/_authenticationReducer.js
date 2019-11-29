@@ -28,7 +28,15 @@ export const authenticationReducer = (state = initialState, action) => {
                 token: Cookies.get('token')
             }
         case authenticationConstants.LOGIN_FAILURE:
-            return initialState
+            return {
+                loggedIn: false,
+                error: action.payload.error
+            }
+        case authenticationConstants.LOGOUT:
+            Cookies.remove('token')
+            return {
+                loggedIn: false
+            }
         default:
             return state
     }

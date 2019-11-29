@@ -7,7 +7,7 @@ export async function postData(url = '', data = {}) {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(data)
-	});
+	})
 	return await response
 }
 
