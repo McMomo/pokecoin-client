@@ -15,10 +15,10 @@ export const authenticationReducer = (state = initialState, action) => {
 			userService.login(action.payload.username, action.payload.password)
 				.then(
 					user => {
-						store.dispatch(authenticationActions.success(user))
+						store.dispatch(authenticationActions.loginSuccess(user))
 					},
 					error => {
-						store.dispatch(authenticationActions.failure(error))
+						store.dispatch(authenticationActions.loginFailure(error))
 					}
 				)
 			return initialState
@@ -36,6 +36,28 @@ export const authenticationReducer = (state = initialState, action) => {
 			Cookies.remove('token')
 			return {
 				loggedIn: false
+			}
+		case authenticationConstants.REGISTER_REQUEST:
+			userService.register(action.payload.username, action.payload.password)
+				.then(
+					user => {
+						store.dispatch(authenticationActions.registerSuccess(user))
+					},
+					error => {
+						store.dispatch(authenticationActions.registerFailure(error))
+					}
+				)
+			return {
+				registrationComplete: false
+			}
+		case authenticationConstants.REGISTER_SUCCESS:
+			return {
+				registrationComplete: true,
+			}
+		case authenticationConstants.REGISTER_FAILURE:
+			return {
+				registrationComplete: false,
+				error: action.payload.error
 			}
 		default:
 			return state

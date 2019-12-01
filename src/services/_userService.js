@@ -19,6 +19,20 @@ const login = (username, password) => {
 		})
 }
 
+const register = (username, password) => {
+	const requestOptions = {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ username, password })
+	}
+
+	return fetch(BASE_URL + '/auth/register', requestOptions)
+		.then(handleResponse)
+		.then(data => {
+			return data
+		})
+}
+
 function handleResponse(response) {
 	return response.text().then(text => {
 		const data = text && JSON.parse(text)
@@ -37,5 +51,6 @@ function handleResponse(response) {
 }
 
 export const userService = {
-	login
+	login,
+	register
 }

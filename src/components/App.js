@@ -10,6 +10,7 @@ import Shop from './ShopPage'
 import Mining from './MiningPage'
 import NavBar from './NavBar'
 import LoginPage from './LoginPage'
+import RegistrationPage from './RegistrationPage'
 
 function App() {
 	return (
@@ -30,6 +31,9 @@ function App() {
 				</Route>
 				<Route path='/login'>
 					<LoginPage />
+				</Route>
+				<Route path='/register'>
+					<RegistrationPage />
 				</Route>
 			</Switch>
 		</Router>

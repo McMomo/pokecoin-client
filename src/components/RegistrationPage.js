@@ -3,13 +3,13 @@ import { useState } from 'react'
 import Pokeball from './PokeBall'
 import { authenticationActions } from '../actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-const LoginPage = (props) => {
+const RegistrationPage = (props) => {
 
 	const dispatch = useDispatch()
 
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+	const registrationComplete = useSelector(state => state.authenticationReducer.registrationComplete)
 	const error = useSelector(state => state.authenticationReducer.error)
 
 	const [username, setUsername] = useState('')
@@ -35,24 +35,23 @@ const LoginPage = (props) => {
 		e.preventDefault()
 		if (username && password) {
 			setSubmitted(true)
-			dispatch(authenticationActions.loginRequest(username, password))
+			dispatch(authenticationActions.registerRequest(username, password))
 		}
 	}
 
 	return (
 		<div className='login'>
-			{loggedIn ? <Redirect to='/cards' /> : ''}
-			<div className='login__background'></div>
+			{registrationComplete ? <Redirect to='/login' /> : ''}
+			<div className='login__background login__background--register'></div>
 			<form className='login__form'>
 				<input className='login__input js-username' type='text' placeholder='Username' name='username' onChange={handleChange} />
 				<input className='login__input js-password' type='password' placeholder='Password' name='password' onChange={handleChange} />
 				{error ? <div className='login__error'>{error}</div> : ''}
-				<button className='login__button' type='submit' onClick={handleSubmit}>Login</button>
-				<Link className='login__button--register' to='/register'>Register</Link>
+				<button className='login__button' type='submit' onClick={handleSubmit}>Register</button>
 				{submitted && !error ? <div className='login__loader js-loader'><Pokeball /></div> : ''}
 			</form>
 		</div>
 	)
 }
 
-export default LoginPage
+export default RegistrationPage

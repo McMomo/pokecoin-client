@@ -1,6 +1,6 @@
 import { authenticationConstants } from '../helpers/constants'
 
-const request = (username, password) => {
+const loginRequest = (username, password) => {
 	return {
 		type: authenticationConstants.LOGIN_REQUEST,
 		payload: {
@@ -9,7 +9,7 @@ const request = (username, password) => {
 		}
 	}
 }
-const success = (token) => {
+const loginSuccess = (token) => {
 	return {
 		type: authenticationConstants.LOGIN_SUCCESS,
 		payload: {
@@ -18,7 +18,7 @@ const success = (token) => {
 	}
 }
 
-const failure = (error) => {
+const loginFailure = (error) => {
 	return {
 		type: authenticationConstants.LOGIN_FAILURE,
 		payload: {
@@ -33,9 +33,40 @@ const logout = () => {
 	}
 }
 
+const registerRequest = (username, password) => {
+	return {
+		type: authenticationConstants.REGISTER_REQUEST,
+		payload: {
+			username,
+			password
+		}
+	}
+}
+
+const registerSuccess = (username) => {
+	return {
+		type: authenticationConstants.REGISTER_SUCCESS,
+		payload: {
+			username
+		}
+	}
+}
+
+const registerFailure = (error) => {
+	return {
+		type: authenticationConstants.REGISTER_FAILURE,
+		payload: {
+			error
+		}
+	}
+}
+
 export const authenticationActions = {
-	request,
-	success,
-	failure,
-	logout
+	loginRequest,
+	loginSuccess,
+	loginFailure,
+	logout,
+	registerRequest,
+	registerSuccess,
+	registerFailure,
 }
