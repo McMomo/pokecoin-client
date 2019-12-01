@@ -1,6 +1,6 @@
-import {combineReducers} from 'redux'
-import {authenticationReducer} from './_authenticationReducer'
+import { combineReducers } from 'redux'
+import { authenticationReducer } from './_authenticationReducer'
 
 export const reducers = combineReducers({
-    authenticationReducer
+	authenticationReducer
 })

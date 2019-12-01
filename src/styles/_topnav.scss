@@ -1,26 +1,25 @@
-/* Add a black background color to the top navigation */
 .topnav {
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  display: flex;
+	background-color: #333;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100%;
+	display: flex;
 
-  &__item {
-    color: white;
-    text-decoration: none;
-    padding: $gutter/2 $gutter;
+	&__item {
+		color: white;
+		text-decoration: none;
+		padding: $gutter/2 $gutter;
 
-    &:hover {
-      background: #ededed;
-      color: #333;
-    }
-  }
+		&:hover {
+			background: #ededed;
+			color: #333;
+		}
+	}
 
-  &__section_right {
-    display: flex;
-    margin-left: auto;
-  }
+	&__section_right {
+		display: flex;
+		margin-left: auto;
+	}
 }
