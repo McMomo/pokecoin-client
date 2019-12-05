@@ -4,11 +4,16 @@ import { getDifficulty, getPrevHash } from '../services/_miningServices'
 import { postNewBlock } from '../services/_miningServices'
 import { calculateHash } from '../helpers/worker'
 import Dugtrio_png from '../images/dugtrio_full.png'
+import Dugtrio_gif from '../images/dugtrio_full.gif'
+
+
+let workerInstance
 
 async function startMiner() {
 	console.log("Dugtrio is going to work!")
+	
+	workerInstance = worker()
 
-	const workerInstance = worker()
 	workerInstance.addEventListener('message', async (message) => {
 		console.log('New Message: ', message.data)
 		if (message.data.type !== 'RPC') {
@@ -24,30 +29,49 @@ async function startMiner() {
 	const prevHash = await getPrevHash()
 	const getDiff = await getDifficulty()
 	await workerInstance.mine(prevHash, getDiff)
+
+	
 }
 
 const MiningPage = () => {
 	const [miningStatus, setMiningStatus] = useState(true)
+	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
+
 
 	useEffect(() => {
-		if (miningStatus) startMiner()
-			.catch(console.log)
+		async function asyncMiner() {
+			if (miningStatus) await startMiner()
+				.catch(console.log)
 
-		setMiningStatus(false)
+			setMiningStatus(false)
+		}
+		asyncMiner()
+		if (reapeatMiningFlag){
+			setMiningStatus(true)
+		}
 	}, [miningStatus])
 
 	return (
 		<div>
-			<img src={Dugtrio_png} alt="Dugtrio is having a break, with KITKAT(C)"/>
+			<img src={miningStatus ? Dugtrio_gif : Dugtrio_png} alt="Dugtrio is having a break, with KITKAT(C)"/>
 			<button onClick={
-				() => setMiningStatus(true)
+				() => {
+					setRepeatMiningFlag(true)
+					setMiningStatus(true)
+				}
 			}>
 				Start
 			</button>
 			<button onClick={
-				() => setMiningStatus(false)
+				() => {
+					setRepeatMiningFlag(false)
+					setMiningStatus(false)
+					workerInstance.terminate()
+				} 
 			}>Stop</button>
-			<p>{miningStatus? "Ja":"nein"}</p>
+			<p>Miningstatus {miningStatus? " Ja":" nein"}</p>
+			<p>RepeatFlag {reapeatMiningFlag? " Ja":" nein"}</p>
+
 		</div>
 	)
 }

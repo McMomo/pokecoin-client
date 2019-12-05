@@ -51,7 +51,6 @@ async function handleResponse(response) {
 	if (!response.ok) {
 
 		if (response.status === 400) {
-			console.log('fuck')
 		}
 
 		const error = (data && data.message) || response.statusText
