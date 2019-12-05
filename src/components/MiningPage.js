@@ -19,7 +19,7 @@ async function startMiner() {
 		if (message.data.type !== 'RPC') {
 			try {
 				console.log(calculateHash(message.data))
-				//await postNewBlock(message.data)
+				await postNewBlock(message.data)
 			} catch (error){
 				console.error(error)
 			}
