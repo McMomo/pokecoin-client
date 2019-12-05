@@ -9,6 +9,7 @@ const loginRequest = (username, password) => {
 		}
 	}
 }
+
 const loginSuccess = (token) => {
 	return {
 		type: authenticationConstants.LOGIN_SUCCESS,

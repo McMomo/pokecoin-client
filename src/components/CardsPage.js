@@ -25,8 +25,6 @@ const CardsPage = () => {
 		<img key={card.name} src={card.imageUrl} alt={card.name} />
 	))
 
-	console.log(cards)
-
 	return (
 		<div>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
