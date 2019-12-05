@@ -6,6 +6,8 @@
 	z-index: 999;
 	width: 100%;
 	display: flex;
+	font-family: 'PokemonHollow';
+	font-size: 2em;
 
 	&__item {
 		color: white;
@@ -21,5 +23,17 @@
 	&__section_right {
 		display: flex;
 		margin-left: auto;
+	}
+
+	&__coin {
+		position: absolute;
+		right: 0;
+		transform: translateX(50%);
+		transition: transform $duration $timing;
+		pointer-events: none;
+
+		&.active {
+			transform: translateX(0);
+		}
 	}
 }
