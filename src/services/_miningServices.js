@@ -37,7 +37,6 @@ export const getPrevHash = async () => {
 	try {
 		const response = await fetch(BASE_URL + '/blockchain/lastBlock')
 		const data = await handleResponse(response)
-		console.log("Last Block Hash: " + data.hash)
 		return data.hash
 	}
 	catch (error) {

@@ -13,16 +13,12 @@ export const calculateHash = (block) => {
 
 export const mine = (prevHash, difficulty) => {
 	let timestamp = new Date().getTime()
-	let nonce = -1
+	const max = Number.MAX_SAFE_INTEGER
+	let nonce = max / 2
 	let newBlock = ''
 
-	while (true) {
-		if (Number.MAX_SAFE_INTEGER === nonce) {
-			nonce = 0
-			timestamp = new Date().getTime()
-		} else {
-			nonce++
-		}
+	while (nonce < max) {
+		nonce++
 		newBlock = {
 			previousHash: prevHash,
 			timestamp: timestamp,
@@ -32,6 +28,6 @@ export const mine = (prevHash, difficulty) => {
 		if (calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join(''))) {
 			self.postMessage(newBlock) // eslint-disable-line no-restricted-globals
 			break
-		}
+		} 
 	}
 }
