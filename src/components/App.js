@@ -10,6 +10,7 @@ import Shop from './ShopPage'
 import Mining from './MiningPage'
 import NavBar from './NavBar'
 import LoginPage from './LoginPage'
+import BoosterDetails from './BoosterDetails'
 import RegistrationPage from './RegistrationPage'
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
 				</Route>
 				<Route path='/register'>
 					<RegistrationPage />
+				</Route>
+				<Route path='/shop/:boosterName'>
+					<BoosterDetails />
 				</Route>
 			</Switch>
 		</Router>
