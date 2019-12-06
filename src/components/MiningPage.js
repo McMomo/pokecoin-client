@@ -37,7 +37,6 @@ const MiningPage = () => {
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
 
-
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()
@@ -51,27 +50,37 @@ const MiningPage = () => {
 		}
 	}, [miningStatus])
 
+	document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+			// stop running task
+			setRepeatMiningFlag(false)
+			setMiningStatus(false)
+			workerInstance.terminate()
+        } else {
+			// page has focus, begin running task
+			setRepeatMiningFlag(true)
+			setMiningStatus(true)
+        }
+    });
+
 	return (
 		<div>
-			<img src={miningStatus ? Dugtrio_gif : Dugtrio_png} alt="Dugtrio is having a break, with KITKAT(C)"/>
-			<button onClick={
+			<img className="mining__img" src={miningStatus ? Dugtrio_gif : Dugtrio_png} alt="Dugtrio is having a break, with KITKAT(C)"/>
+			<button className="mining__button" onClick={
 				() => {
 					setRepeatMiningFlag(true)
 					setMiningStatus(true)
 				}
-			}>
-				Start
+			}>Start
 			</button>
-			<button onClick={
+			<button className="mining__button" onClick={
 				() => {
 					setRepeatMiningFlag(false)
 					setMiningStatus(false)
 					workerInstance.terminate()
 				} 
-			}>Stop</button>
-			<p>Miningstatus {miningStatus? " Ja":" nein"}</p>
-			<p>RepeatFlag {reapeatMiningFlag? " Ja":" nein"}</p>
-
+			}>Stop
+			</button>
 		</div>
 	)
 }
