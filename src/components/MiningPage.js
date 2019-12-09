@@ -6,7 +6,6 @@ import { calculateHash } from '../helpers/worker'
 import Dugtrio_png from '../images/dugtrio_full.png'
 import Dugtrio_gif from '../images/dugtrio_full.gif'
 
-
 let workerInstance
 
 async function startMiner() {
@@ -21,7 +20,7 @@ async function startMiner() {
 				console.log(calculateHash(message.data))
 				await postNewBlock(message.data)
 			} catch (error){
-				console.error(error)
+				console.error("Not fast enough .. \n" + error)
 			}
 		}
 	})
@@ -48,24 +47,34 @@ const MiningPage = () => {
 		if (reapeatMiningFlag){
 			setMiningStatus(true)
 		}
-	}, [miningStatus])
+	}, [miningStatus, reapeatMiningFlag])
 
 	document.addEventListener('visibilitychange', function () {
         if (document.hidden) {
 			// stop running task
+			console.log("// stop running task")
 			setRepeatMiningFlag(false)
 			setMiningStatus(false)
 			workerInstance.terminate()
         } else {
 			// page has focus, begin running task
+			console.log("// page has focus, begin running task")
 			setRepeatMiningFlag(true)
 			setMiningStatus(true)
         }
     });
 
+	useEffect(() => {
+		return () => {
+			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
+			workerInstance.terminate()
+		}
+	})
+
+
 	return (
 		<div>
-			<img className="mining__img" src={miningStatus ? Dugtrio_gif : Dugtrio_png} alt="Dugtrio is having a break, with KITKAT(C)"/>
+			<img className="mining__img" src={reapeatMiningFlag ? Dugtrio_gif : Dugtrio_png} alt="Dugtrio is having a break, with KITKAT(C)"/>
 			<button className="mining__button" onClick={
 				() => {
 					setRepeatMiningFlag(true)
