@@ -6,7 +6,7 @@ import {
     useParams
 } from 'react-router-dom'
 import { 
-    getBooster,
+    getBooster
 } from '../services/_shopServices';
 
 const BoosterDetails = () => {
@@ -14,11 +14,9 @@ const BoosterDetails = () => {
     const [booster, setBooster] = useState([])
 
     useAsyncEffect(async () => {
-        const boo = await getBooster(boosterName)
-		setBooster(boo)
+        const booster = await getBooster(boosterName)
+		setBooster(booster.cards)
     }, [])
-    
-    console.log(booster)
     
     const boosterCards = booster.map(cards => (
 		<img key={cards.name} src={cards.imageUrl} alt={cards.name} />
@@ -26,7 +24,7 @@ const BoosterDetails = () => {
 
     return (
         <div>
-            {boosterCards}
+            { boosterCards }
             <Link to={`/shop`}>Go Back</ Link>
         </div>
     )

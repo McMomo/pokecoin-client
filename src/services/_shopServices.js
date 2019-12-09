@@ -1,15 +1,15 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
 
-export const postBuyNewBooster = (boosterName) => {
+export const getBuyNewBooster = (boosterName) => {
 	const token = Cookies.get('token')
 
 	const requestOptions = {
-		method: 'POST',
+		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
 			'token': token
-		}
+        },
 	}
 
 	return fetch(BASE_URL + `/cards/packages/${boosterName}/buyDefaultPackage`, requestOptions)
@@ -38,6 +38,7 @@ export const getBooster = async (boosterName) => {
         console.log("No Booster was found")
     }
 }
+
 
 export const getBoosterPrice = async () => {
     try {

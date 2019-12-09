@@ -6,7 +6,8 @@ import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { 
 	getBoosterList,
-	getBoosterPrice
+	getBoosterPrice,
+	getBuyNewBooster
 } from '../services/_shopServices'
 
 import Base from '../images/Charizard_Booster-2.png'
@@ -15,6 +16,8 @@ const ShopPage = () => {
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [boosterNames, setBoosterNames] = useState([])
 	const [boosterPrice, setBoosterPrice] = useState([])
+	const [boughtBooster, setBoughtBooster] = useState([])
+	const [toBuyBooster, settoBuyBooster] = useState([])
 
 	useAsyncEffect(async () => {
 		const boosterNames = await getBoosterList()
@@ -26,12 +29,35 @@ const ShopPage = () => {
 		setBoosterPrice(boosterPrice)
 	}, [])
 
+	useAsyncEffect(() => {
+		async function asyncBuyBooster() {
+			if (toBuyBooster.length > 0) {
+				console.log(toBuyBooster)
+				const newBooster = await getBuyNewBooster(toBuyBooster)
+				setBoughtBooster(newBooster)
+				console.log(boughtBooster)
+				// direct to page or popup of bought booster?
+				settoBuyBooster([])
+			}
+		}
+		asyncBuyBooster()
+	}, [toBuyBooster])
+
 	const boosterlist = boosterNames.map(name => (
 		<div key={name}>
 			<p>{name}</p>
 			<img key={name} src={`${ Base }`} alt={name}/>
 			<Link to={`/shop/${ name }`}>Show what could be inside the booster</ Link>
-			<p>Buy for {boosterPrice} Pokecoins</p>
+			<form className='buy__form'>
+				<button className='buy__button' type='submit' onClick={ 
+					(e) => {
+						e.preventDefault()
+						settoBuyBooster(name)
+					}
+				}>
+					Buy for {boosterPrice} Pokecoins
+				</button>
+			</form>
 		</ div>
 	))
 
