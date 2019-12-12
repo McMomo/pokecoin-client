@@ -1,7 +1,7 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
 
-export const postNewBlock = (newBlock) => {
+export const postNewBlock = async (newBlock) => {
 
 	const token = Cookies.get('token')
 
@@ -14,13 +14,14 @@ export const postNewBlock = (newBlock) => {
 		body: JSON.stringify(newBlock)
 	}
 
-
-	return fetch(BASE_URL + '/blockchain/blocks', requestOptions)
-		.then(handleResponse)
-		.then(data => {
-			return data
-		})
-
+	try {
+		const response = await fetch (BASE_URL + '/blockchain/blocks', requestOptions)
+		const data = await handleResponse(response)
+		console.log("Post answer data: " + data.block)
+		return data
+	} catch (error) {
+		console.log(error)
+	}
 }
 
 export const getDifficulty = async () => {
@@ -37,6 +38,7 @@ export const getPrevHash = async () => {
 	try {
 		const response = await fetch(BASE_URL + '/blockchain/lastBlock')
 		const data = await handleResponse(response)
+		console.log("This is the last Hash: " + data.hash)
 		return data.hash
 	}
 	catch (error) {

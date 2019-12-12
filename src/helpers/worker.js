@@ -8,6 +8,7 @@ export const calculateHash = (block) => {
 		block.data +
 		block.nonce.toString()
 	)
+
 	return crypto.createHash('sha256').update(information).digest('hex')
 }
 

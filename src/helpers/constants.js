@@ -16,3 +16,8 @@ export const shopConstants = {
 	BALANCE_SUCCESS: 'BALANCE_SUCCESS',
 	BALANCE_FAILURE: 'BALANCE_FAILURE'
 }
+
+export const pikachu_colors = {
+	SEARCHING: '#97b7ff',
+	PAUSED: '#7a99ff'
+}
