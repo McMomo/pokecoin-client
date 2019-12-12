@@ -32,11 +32,10 @@ const ShopPage = () => {
 	useAsyncEffect(() => {
 		async function asyncBuyBooster() {
 			if (toBuyBooster.length > 0) {
-				console.log(toBuyBooster)
 				const newBooster = await getBuyNewBooster(toBuyBooster)
 				setBoughtBooster(newBooster)
-				console.log(boughtBooster)
-				// direct to page or popup of bought booster?
+				console.log(boughtBooster) 
+				// use shit from dennis
 				settoBuyBooster([])
 			}
 		}
