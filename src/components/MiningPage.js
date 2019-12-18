@@ -86,25 +86,28 @@ const MiningPage = () => {
 		}
 	}
 
+	
 	const dispatch = useDispatch()
 	const token = useSelector(state => state.authenticationReducer.token)
 
-	const fetchCoins = async () => {
+	useAsyncEffect(async () => {
 		try {
 			const response = await userService.fetchWalletBalance(token)
 			if(!response.ok) throw new Error(response.error)
 			const data = await response.json()
 			dispatch(shopActions.balanceSuccess(data.amount))
+
+			document.findElement("topnav__coin").className = "topnav__coin.active"
+
 		} catch (error) {
 			console.error(error)
-		}
-	}
+		} 
+	}, [coinSession])
 
-	useAsyncEffect(() => fetchCoins(), [coinSession])
 
 	return (
 		<div>
-			<img className="mining__img" src={getMiningPageImg()} alt="Dugtrio is having a break, with KITKAT(C)"/>
+			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)"/>
 			
 			<button className="mining__button" onClick={
 				() => {
