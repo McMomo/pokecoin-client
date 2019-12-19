@@ -107,7 +107,7 @@ const MiningPage = () => {
 				const data = await response.json()
 				dispatch(shopActions.balanceSuccess(data.amount))
 
-				if (coinFound > 1) triggerEevee()
+				if (coinFound) triggerEevee()
 
 			} catch (error) {
 				console.error(error)
