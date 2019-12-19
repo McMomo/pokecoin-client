@@ -63,7 +63,9 @@ const ShopPage = () => {
 	return (
 		<div>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
-			{boosterlist}
+			<div>
+				{boosterlist}
+			</div>
 		</div>
 	)
 }
