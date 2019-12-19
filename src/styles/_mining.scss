@@ -45,7 +45,6 @@
 		&.active {
 			color: white;
 			background: color('dark');
-			transform: scaleX(0);
 
 			&::after {
 				transform: scaleX(1);

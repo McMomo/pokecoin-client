@@ -1,9 +1,9 @@
 const activate = (elem) => {
-	elem.classList.add('active')
+	if (elem) elem.classList.add('active')
 }
 
 const deactivate = (elem) => {
-	elem.classList.remove('active')
+	if (elem) elem.classList.remove('active')
 }
 
 const deactivateAll = (nodelist) => {

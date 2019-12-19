@@ -17,10 +17,9 @@ export const postNewBlock = async (newBlock) => {
 	try {
 		const response = await fetch (BASE_URL + '/blockchain/blocks', requestOptions)
 		const data = await handleResponse(response)
-		console.log("Post answer data: " + data.block)
 		return data
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 
@@ -38,7 +37,6 @@ export const getPrevHash = async () => {
 	try {
 		const response = await fetch(BASE_URL + '/blockchain/lastBlock')
 		const data = await handleResponse(response)
-		console.log("This is the last Hash: " + data.hash)
 		return data.hash
 	}
 	catch (error) {

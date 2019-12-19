@@ -10,8 +10,10 @@ import { useAsyncEffect } from 'use-async-effect'
 import { useSelector, useDispatch } from 'react-redux'
 import { userService } from '../services'
 import { shopActions } from '../actions'
+import { DOMHelpers } from '../helpers/domhelpers'
 
 let workerInstance
+let data
 
 async function startMiner() {
 	workerInstance = worker()
@@ -20,25 +22,32 @@ async function startMiner() {
 		console.log('New Message: ', message.data)
 		if (message.data.type !== 'RPC') {
 				console.log("New Hash found: " + calculateHash(message.data))
-				await postService(message.data)
-				console.log("I DONT WANNA WAIT!")
+				data = await postNewBlock(data)
+				console.log("data: " + data)
 		}
 	})
-
-	async function postService(data){
-		let response = await postNewBlock(data)
-		console.log("Post response in waiter: " + response)
-	}
 
 	const prevHash = await getPrevHash()
 	const getDiff = await getDifficulty()
 	await workerInstance.mine(prevHash, getDiff)
 }
 
+const triggerEevee = () => {
+	const eevee = document.querySelector(".topnav__coin")
+	DOMHelpers.activate(eevee)
+	setTimeout(() => {
+		DOMHelpers.deactivate(eevee)
+	}, 700)
+}
+
 const MiningPage = () => {
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
 	const [coinSession, setCoinSession] = useState(0)
+
+	const startBtn = document.querySelector(".js-start")
+	const stopBtn = document.querySelector(".js-stop")
+
 
 	useEffect(() => {
 		async function asyncMiner() {
@@ -57,13 +66,11 @@ const MiningPage = () => {
 	// document.addEventListener('visibilitychange', function () {
     //     if (document.hidden) {
 	// 		// stop running task
-	// 		console.log("// stop running task")
 	// 		setRepeatMiningFlag(false)
 	// 		setMiningStatus(false)
 	// 		workerInstance.terminate()
     //     } else {
 	// 		// page has focus, begin running task
-	// 		console.log("// page has focus, begin running task")
 	// 		setRepeatMiningFlag(true)
 	// 		setMiningStatus(true)
     //     }
@@ -79,13 +86,13 @@ const MiningPage = () => {
 	const getMiningPageImg = () => {
 		if (reapeatMiningFlag){
 			document.body.style.backgroundColor = pikachu_colors.SEARCHING
-			document.querySelector(".js-stop").classList.remove('active')
-			document.querySelector(".js-start").classList.add('active')
+			DOMHelpers.deactivate(stopBtn)
+			DOMHelpers.activate(startBtn)
 			return Pikachu_searching
 		} else {
 			document.body.style.backgroundColor = pikachu_colors.PAUSED
-			document.querySelector(".js-start").classList.remove('active')
-			document.querySelector(".js-stop").classList.add('active')
+			DOMHelpers.deactivate(startBtn)
+			DOMHelpers.activate(stopBtn)
 			return Pikachu_paused
 		}
 	}
@@ -100,11 +107,7 @@ const MiningPage = () => {
 			const data = await response.json()
 			dispatch(shopActions.balanceSuccess(data.amount))
 
-			document.querySelector(".topnav__coin").classList.add('active')
-			setTimeout(() => {
-				document.querySelector(".topnav__coin").classList.remove('active')
-			}, 666)
-			
+			if (coinSession > 1) triggerEevee()
 
 		} catch (error) {
 			console.error(error)
