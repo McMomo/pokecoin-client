@@ -17,7 +17,7 @@ export const postNewBlock = async (newBlock) => {
 	try {
 		const response = await fetch (BASE_URL + '/blockchain/blocks', requestOptions)
 		const data = await handleResponse(response)
-		return data
+		return response.ok
 	} catch (error) {
 		console.error(error)
 	}

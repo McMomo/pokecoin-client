@@ -13,7 +13,7 @@ import { shopActions } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 
 let workerInstance
-let data
+let result
 
 async function startMiner() {
 	workerInstance = worker()
@@ -22,8 +22,7 @@ async function startMiner() {
 		console.log('New Message: ', message.data)
 		if (message.data.type !== 'RPC') {
 				console.log("New Hash found: " + calculateHash(message.data))
-				data = await postNewBlock(data)
-				console.log("data: " + data)
+				result = await postNewBlock(message.data)
 		}
 	})
 
@@ -52,9 +51,9 @@ const MiningPage = () => {
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()
-				.then(setCoinSession(coinSession + 1))
 				.catch(console.error)
 
+			if (result) setCoinSession(coinSession + 1)
 			setMiningStatus(false)
 		}
 		asyncMiner()
