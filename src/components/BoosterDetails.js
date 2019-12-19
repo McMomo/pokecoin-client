@@ -23,7 +23,7 @@ const BoosterDetails = () => {
 	))
 
     return (
-        <div>
+        <div className='BoosterDetail'>
             { boosterCards }
             <Link to={`/shop`}>Go Back</ Link>
         </div>
