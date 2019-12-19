@@ -33,7 +33,12 @@
 		pointer-events: none;
 
 		&.active {
+			position: absolute;
+			right: 0;
 			transform: translateX(0);
+			transition: transform $duration $timing;
+			pointer-events: none;
+
 		}
 	}
 }

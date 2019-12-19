@@ -79,14 +79,17 @@ const MiningPage = () => {
 	const getMiningPageImg = () => {
 		if (reapeatMiningFlag){
 			document.body.style.backgroundColor = pikachu_colors.SEARCHING
+			document.querySelector(".js-stop").classList.remove('active')
+			document.querySelector(".js-start").classList.add('active')
 			return Pikachu_searching
 		} else {
 			document.body.style.backgroundColor = pikachu_colors.PAUSED
+			document.querySelector(".js-start").classList.remove('active')
+			document.querySelector(".js-stop").classList.add('active')
 			return Pikachu_paused
 		}
 	}
 
-	
 	const dispatch = useDispatch()
 	const token = useSelector(state => state.authenticationReducer.token)
 
@@ -97,7 +100,11 @@ const MiningPage = () => {
 			const data = await response.json()
 			dispatch(shopActions.balanceSuccess(data.amount))
 
-			document.findElement("topnav__coin").className = "topnav__coin.active"
+			document.querySelector(".topnav__coin").classList.add('active')
+			setTimeout(() => {
+				document.querySelector(".topnav__coin").classList.remove('active')
+			}, 666)
+			
 
 		} catch (error) {
 			console.error(error)
@@ -109,14 +116,14 @@ const MiningPage = () => {
 		<div>
 			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)"/>
 			
-			<button className="mining__button" onClick={
+			<button className="mining__button js-start" onClick={
 				() => {
 					setRepeatMiningFlag(true)
 					setMiningStatus(true)
 				}
 			}>Start
 			</button>
-			<button className="mining__button" onClick={
+			<button className="mining__button js-stop" onClick={
 				() => {
 					setRepeatMiningFlag(false)
 					setMiningStatus(false)
