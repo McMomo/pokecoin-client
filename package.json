@@ -8,6 +8,7 @@
     "basiclightbox": "^5.0.2",
     "js-cookie": "^2.2.1",
     "node-sass": "^4.13.0",
+    "npm": "^6.13.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.3",
