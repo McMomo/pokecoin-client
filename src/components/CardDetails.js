@@ -1,8 +1,6 @@
 import React from 'react'
 import * as basicLightbox from 'basiclightbox'
 import { fetchOneCard } from '../services/_cardsServices'
-import { info } from 'node-sass'
-
 
 const infoMapper = (infos) => {
     return (
