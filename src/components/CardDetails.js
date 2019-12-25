@@ -15,20 +15,21 @@ const CardDetails = (props) => {
     const card = fetchOneCard(props.id)
 
     const cardBox  = basicLightbox.create(
+        String(
         <div>
-            <h1 className="grid-container">Detail-Ansicht</h1>
-            <button onClick={this.close}>X</button>
+            <h1 className="grid-container"> Detail-Ansicht </h1>
+            {/*<button onClick={parent.close}>X</button>*/}
             <h3>{card.name}</h3>
             <p>{card.hp}</p>
-            <div>{card.types.map(type => (
+            <div>{card.types? card.types.map(type => (
                 <p>{type}</p>
-            ))}</div>
+            )):''}</div>
             <p>
-                Ability: {card.ability.name} <br/>
-                {card.ability.text}
+                Ability: {card.ability? card.ability.name: ''} <br/>
+                {card.ability? card.ability.text: ''}
             </p>
             <p>Attacks: <br/></p>
-            <div>{card.attacks.map(attack => (
+            <div>{card.attacks? card.attacks.map(attack => (
                 <div>
                     <p><strong>{attack.name}</strong></p>
                     <p>{attack.text}</p>
@@ -39,23 +40,20 @@ const CardDetails = (props) => {
                     <p>{attack.convertedEnergyCost}</p>
 
                 </div>
-            ))}
+            )): ''}
             </div>
-            <div>{card.weaknesses.map(weaknes => (
+            <div>{card.weaknesses? card.weaknesses.map(weaknes => (
                 <p>{weaknes.type} {weaknes.value}</p>
-            ))}</div>
-            <div>{card.retreatCost.map(reCost => (
+            )): ''}</div>
+            <div>{card.retreatCost? card.retreatCost.map(reCost => (
                 <p>{reCost.type} {reCost.value}</p>
-            ))}</div>
-            <p>{card.convertedRetreatCost}</p>
+            )): ''}</div>
+            <p>{card.convertedRetreatCost? card.convertedRetreatCost: ''}</p>
         </div>
+        )
+    )
 
-    )
-    return (
-        <div>
-            {cardBox}
-        </div>
-    )
+    return cardBox
 
 }
 

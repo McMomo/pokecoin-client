@@ -1,11 +1,14 @@
 import React from 'react'
 import CardDetails from './CardDetails'
+import * as basicLightbox from 'basiclightbox'
 
 
 const Card = (props) => {
 
     const diplayCardDetails = () => {
-        return <CardDetails id={props.id}/>
+       const instance = CardDetails(props)
+       console.log("Hey i'm a basicLightBox")
+       instance.show()
     }
 
     return(

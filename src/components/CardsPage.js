@@ -78,7 +78,7 @@ const CardsPage = () => {
 			</form>
 			<div>
 				{cards.map(card => (
-					<Card id={card.id} imageUrl={card.imageUrl} name={card.name}/>
+					<Card key={card.id} id={card.id} imageUrl={card.imageUrl} name={card.name}/>
 				))}
 			</div>
 			{showUserCards ? "" :
