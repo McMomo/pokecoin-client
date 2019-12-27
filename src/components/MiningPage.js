@@ -19,21 +19,33 @@ async function startMiner() {
 	workerInstance = worker()
 
 	workerInstance.addEventListener('message', async (message) => {
-		console.log('New Message: ', message.data)
+		/*console.log('New Message: ', message.data)*/
 		if (message.data.type !== 'RPC') {
-			console.log("New Hash found: " + calculateHash(message.data))
-			result = await postNewBlock(message.data)
+			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
+			const response = await postNewBlock(message.data)
+			try {
+				if (response.ok){ 
+					result = true
+				} else {
+					result = false
+				}
+			} catch (error){
+				console.error('EventListener: ' + error)
+				result = false
+			}
 		}
 	})
 
 	const prevHash = await getPrevHash()
 	const getDiff = await getDifficulty()
 	await workerInstance.mine(prevHash, getDiff)
+	workerInstance.terminate()
 }
 
 const triggerEevee = () => {
 	const eevee = document.querySelector(".topnav__coin")
 	DOMHelpers.activate(eevee)
+	/*console.log('%c eevee should be triggerd', 'color: brown')*/
 	setTimeout(() => {
 		DOMHelpers.deactivate(eevee)
 	}, 700)
@@ -54,11 +66,10 @@ const MiningPage = () => {
 
 			if (result) setCoinFound(true)
 			setMiningStatus(false)
+			
 		}
 		asyncMiner()
-		if (reapeatMiningFlag) {
-			setMiningStatus(true)
-		}
+		if (reapeatMiningFlag) setMiningStatus(true)
 	}, [miningStatus, reapeatMiningFlag])
 
 	// document.addEventListener('visibilitychange', function () {
@@ -106,7 +117,7 @@ const MiningPage = () => {
 				const data = await response.json()
 				dispatch(shopActions.balanceSuccess(data.amount))
 
-				if (coinFound) triggerEevee()
+				if (result && coinFound) triggerEevee()
 
 			} catch (error) {
 				console.error(error)
