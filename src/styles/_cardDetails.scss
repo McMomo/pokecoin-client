@@ -29,3 +29,33 @@ $basicLightbox__timing: ease; // Transition timing
 .body *, body ::after, body ::before {
     box-sizing: border-box;
 }
+
+.cardDetail {
+    display: grid;
+    grid-row-gap: 50px;
+    justify-content: center;    
+
+    &__headline {
+
+    }
+
+    &__image {
+
+    }
+
+    &__basics {
+
+    }
+
+    &__attacks {
+
+    }
+
+    &__weakness {
+
+    }
+
+    &__retreat {
+
+    }
+}
