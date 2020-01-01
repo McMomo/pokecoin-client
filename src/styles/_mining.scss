@@ -40,7 +40,17 @@
 			&::after {
 				transform: scaleX(1);
 			}
-		}    }
+		}    
+		
+		&.active {
+			color: white;
+			background: color('dark');
+
+			&::after {
+				transform: scaleX(1);
+			}
+		}
+	}
 
     &__img {
         display: block;

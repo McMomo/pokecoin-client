@@ -10,8 +10,10 @@ import { useAsyncEffect } from 'use-async-effect'
 import { useSelector, useDispatch } from 'react-redux'
 import { userService } from '../services'
 import { shopActions } from '../actions'
+import { DOMHelpers } from '../helpers/domhelpers'
 
 let workerInstance
+let result = false
 
 async function startMiner() {
 	workerInstance = worker()
@@ -19,55 +21,59 @@ async function startMiner() {
 	workerInstance.addEventListener('message', async (message) => {
 		console.log('New Message: ', message.data)
 		if (message.data.type !== 'RPC') {
-				console.log("New Hash found: " + calculateHash(message.data))
-				await postService(message.data)
-				console.log("I DONT WANNA WAIT!")
+			console.log("New Hash found: " + calculateHash(message.data))
+			result = await postNewBlock(message.data)
 		}
 	})
-
-	async function postService(data){
-		let response = await postNewBlock(data)
-		console.log("Post response in waiter: " + response)
-	}
 
 	const prevHash = await getPrevHash()
 	const getDiff = await getDifficulty()
 	await workerInstance.mine(prevHash, getDiff)
 }
 
+const triggerEevee = () => {
+	const eevee = document.querySelector(".topnav__coin")
+	DOMHelpers.activate(eevee)
+	setTimeout(() => {
+		DOMHelpers.deactivate(eevee)
+	}, 700)
+}
+
 const MiningPage = () => {
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
-	const [coinSession, setCoinSession] = useState(0)
+	const [coinFound, setCoinFound] = useState(false)
+
+	const startBtn = document.querySelector(".js-start")
+	const stopBtn = document.querySelector(".js-stop")
+
 
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()
-				.then(setCoinSession(coinSession + 1))
 				.catch(console.error)
 
+			if (result) setCoinFound(true)
 			setMiningStatus(false)
 		}
 		asyncMiner()
-		if (reapeatMiningFlag){
+		if (reapeatMiningFlag) {
 			setMiningStatus(true)
 		}
 	}, [miningStatus, reapeatMiningFlag])
 
 	// document.addEventListener('visibilitychange', function () {
-    //     if (document.hidden) {
+	//     if (document.hidden) {
 	// 		// stop running task
-	// 		console.log("// stop running task")
 	// 		setRepeatMiningFlag(false)
 	// 		setMiningStatus(false)
 	// 		workerInstance.terminate()
-    //     } else {
+	//     } else {
 	// 		// page has focus, begin running task
-	// 		console.log("// page has focus, begin running task")
 	// 		setRepeatMiningFlag(true)
 	// 		setMiningStatus(true)
-    //     }
-    // });
+	//     }
+	// });
 
 	// useEffect(() => {
 	// 	return () => {
@@ -77,51 +83,58 @@ const MiningPage = () => {
 	// })
 
 	const getMiningPageImg = () => {
-		if (reapeatMiningFlag){
+		if (reapeatMiningFlag) {
 			document.body.style.backgroundColor = pikachu_colors.SEARCHING
+			DOMHelpers.deactivate(stopBtn)
+			DOMHelpers.activate(startBtn)
 			return Pikachu_searching
 		} else {
 			document.body.style.backgroundColor = pikachu_colors.PAUSED
+			DOMHelpers.deactivate(startBtn)
+			DOMHelpers.activate(stopBtn)
 			return Pikachu_paused
 		}
 	}
 
-	
 	const dispatch = useDispatch()
 	const token = useSelector(state => state.authenticationReducer.token)
 
 	useAsyncEffect(async () => {
-		try {
-			const response = await userService.fetchWalletBalance(token)
-			if(!response.ok) throw new Error(response.error)
-			const data = await response.json()
-			dispatch(shopActions.balanceSuccess(data.amount))
+		if (coinFound) {
+			try {
+				const response = await userService.fetchWalletBalance(token)
+				if (!response.ok) throw new Error(response.error)
+				const data = await response.json()
+				dispatch(shopActions.balanceSuccess(data.amount))
 
-			document.findElement("topnav__coin").className = "topnav__coin.active"
+				if (coinFound) triggerEevee()
 
-		} catch (error) {
-			console.error(error)
-		} 
-	}, [coinSession])
+			} catch (error) {
+				console.error(error)
+			} finally {
+				setCoinFound(false)
+			}
+		}
+	}, [coinFound])
 
 
 	return (
 		<div>
-			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)"/>
-			
-			<button className="mining__button" onClick={
+			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)" />
+
+			<button className="mining__button js-start" onClick={
 				() => {
 					setRepeatMiningFlag(true)
 					setMiningStatus(true)
 				}
 			}>Start
 			</button>
-			<button className="mining__button" onClick={
+			<button className="mining__button js-stop" onClick={
 				() => {
 					setRepeatMiningFlag(false)
 					setMiningStatus(false)
 					workerInstance.terminate()
-				} 
+				}
 			}>Stop
 			</button>
 		</div>
