@@ -1,0 +1,17 @@
+.shop {
+    &__button {
+        display: inline-block;
+        appearance: none;
+        background: #2875ed;
+        margin: .5em;
+        padding: .5em 1em;
+        border: none;
+        color: white;
+        font: inherit;
+        border-radius: 3px;
+        outline: none;
+    }
+}
+
+
+

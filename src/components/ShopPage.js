@@ -9,8 +9,10 @@ import {
 	getBoosterPrice,
 	getBuyNewBooster
 } from '../services/_shopServices'
-
+import * as basicLightbox from 'basiclightbox' 
 import Base from '../images/Charizard_Booster-2.png'
+
+//const basicLightbox = require('basiclightbox')
 
 const ShopPage = () => {
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
@@ -18,6 +20,10 @@ const ShopPage = () => {
 	const [boosterPrice, setBoosterPrice] = useState([])
 	const [boughtBooster, setBoughtBooster] = useState([])
 	const [toBuyBooster, settoBuyBooster] = useState([])
+	
+	const instance = basicLightbox.create(`	
+		<p>Hello Pokemon</p>
+	`)
 
 	useAsyncEffect(async () => {
 		const boosterNames = await getBoosterList()
@@ -32,10 +38,10 @@ const ShopPage = () => {
 	useAsyncEffect(() => {
 		async function asyncBuyBooster() {
 			if (toBuyBooster.length > 0) {
-				const newBooster = await getBuyNewBooster(toBuyBooster)
-				setBoughtBooster(newBooster)
-				console.log(boughtBooster) 
-				// use shit from dennis
+				//const newBooster = await getBuyNewBooster(toBuyBooster)
+				//setBoughtBooster(newBooster)
+				//console.log(boughtBooster) 
+				
 				settoBuyBooster([])
 			}
 		}
@@ -47,11 +53,12 @@ const ShopPage = () => {
 			<p>{name}</p>
 			<img key={name} src={`${ Base }`} alt={name}/>
 			<Link to={`/shop/${ name }`}>Show what could be inside the booster</ Link>
-			<form className='buy__form'>
-				<button className='buy__button' type='submit' onClick={ 
+			<form className='shop__form'>
+				<button className='shop__button' type='submit' onClick={ 
 					(e) => {
 						e.preventDefault()
 						settoBuyBooster(name)
+						instance.show()
 					}
 				}>
 					Buy for {boosterPrice} Pokecoins
