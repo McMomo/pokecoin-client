@@ -11,6 +11,14 @@ const infoMapper = (infos) => {
     )
 }
 
+const IsJsonString = (str) => {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
 const CardDetails = async (props) => {
     
@@ -19,10 +27,10 @@ const CardDetails = async (props) => {
     
     if (card.supertype === supertypes.TRAINER){
         html = (
-            `<div className='cardDetail-container'>
-                <h3> Cardname ${card.name}</h3>
-                <h4> Type: ${card.supertype} </h4>
-                <img key=${card.id} src=${card.imageUrl} alt=${card.name}/>
+            `<div className='cardDetail'>
+                <div className='cardDetail__headline'> Cardname ${card.name}</div>
+                <div> Type: ${card.supertype} </div>
+                <img className='cardDetail__image' key=${card.id} src=${card.imageUrl} alt=${card.name}/>
                 ${card.text.map(line => ReactDOMServer.renderToString(
                     <p>{line}</p>
                 ))}
@@ -32,16 +40,20 @@ const CardDetails = async (props) => {
 
     } else if (card.supertype === supertypes.ENERGY){
         html = (
-            `<div className='cardDetail-container'> 
-                <h3> Cardname: ${card.name}</h3>
-                <img key=${card.id} src=${card.imageUrl} alt=${card.name}/>
+            `<div className='cardDetail'> 
+                <div className='cardDetail__headline'> Cardname: ${card.name}</div>
+                <img className='cardDetail__image' key=${card.id} src=${card.imageUrl} alt=${card.name}/>
             </div>`
         )
 
-    } else if (card.supertype === supertypes.POKEMON) { 
+    } else if (card.supertype === supertypes.POKEMON) {
+        console.log(card.attacks)
+        card.attacks.map(a => (
+            console.log(a)
+        ))
         html = (`
-            <div className="cardDetail">
-                <div className='cardDetail__headline'> Cardname: ${card.name} </h3>
+            <div className='cardDetail'>
+                <div className='cardDetail__headline'> Cardname: ${card.name} </div>
                 <img className='cardDetail__image' key=${card.id} src=${card.imageUrl} alt=${card.name}/>
                 <div className='cardDetail__basics'>
                     <div>HP: ${card.hp}</div>
@@ -52,24 +64,19 @@ const CardDetails = async (props) => {
                     </div>
                 </div>
                 <div className='cardDetail__attacks'>
-                    <div>Attacks: </div>
-                    <div>${card.attacks? card.attacks.map(attack => ReactDOMServer.renderToString(
-                        <div>
-                            <p><strong>{attack.name} </strong> {attack.text}</p>
-                            <p>Damage: {attack.damage} - Energy: {attack.cost.map(cost => ({cost}.cost))}</p>
-                        </div>
-                    )): 'The Card has no attacks'}
-                    </div>
+                    <br/><strong>Attacks:</strong>
+                    ${card.attacks? card.attacks.map(attack => (ReactDOMServer.renderToString(
+                        <p><strong>{attack.name} </strong> {attack.text}
+                        <br/>Damage: {attack.damage} - Energy: {attack.cost.map(cost => ({cost}.cost)).join(' ')}</p>
+                    ))).join(' '): 'The Card has no attacks'}
                 </div>
                 <div className='cardDetail__weakness'>${card.weaknesses? card.weaknesses.map(weakness => ReactDOMServer.renderToString(
                     <p>Weakness: {weakness.type} {weakness.value}</p>
                 )): ''}</div>
                 <div className='cardDetail__retreat'> 
-                    <div>${card.retreatCost? card.retreatCost.map(reCost => ReactDOMServer.renderToString(
-                        <p>Retreat Cost: {reCost} {reCost.type} {reCost.value}</p>
-                    )): ''}</div>
-                    <p>Retreat cost: ${!isNaN(card.convertedRetreatCost)? card.convertedRetreatCost: '0'}</p>
+                    Retreat cost: ${!isNaN(card.convertedRetreatCost)? 'Colorless x' + card.convertedRetreatCost: '0'}
                 </div>
+                <br/>
             </div>
         `)
     }

@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { userService } from '../services'
 import { shopActions } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
+import { Redirect } from 'react-router-dom'
+
 
 let workerInstance
 let result = false
@@ -52,6 +54,7 @@ const triggerEevee = () => {
 }
 
 const MiningPage = () => {
+	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
 	const [coinFound, setCoinFound] = useState(false)
@@ -129,7 +132,8 @@ const MiningPage = () => {
 
 
 	return (
-		<div>
+		<div>			
+			{!loggedIn ? <Redirect to='/login' /> : ''}
 			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)" />
 
 			<button className="mining__button js-start" onClick={

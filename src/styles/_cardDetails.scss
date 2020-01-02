@@ -19,11 +19,20 @@ $basicLightbox__timing: ease; // Transition timing
     transition: opacity .4s ease;
     z-index: 1000;
     will-change: opacity;
+    &__placeholder {
+        width: 50%;
+        height: 75%;
+        border-radius: 10pt;
+        overflow: auto;
+        padding: 20pt;
+        background-color: white;
+        color: black;
+        align-content: center;
+    }
 }
 
 .basicLightbox--visible {
     opacity: 1;
-    color: white;
 }
 
 .body *, body ::after, body ::before {
@@ -32,30 +41,41 @@ $basicLightbox__timing: ease; // Transition timing
 
 .cardDetail {
     display: grid;
-    grid-row-gap: 50px;
-    justify-content: center;    
+    justify-content: center;
 
     &__headline {
-
+        grid-column: 1 / span 3;
+        grid-row: 1;
+        font-size: larger;
+        font-weight: bold;
     }
 
     &__image {
-
+        justify-content: center;
+        grid-column: 2;
+        grid-row: 2;
     }
 
     &__basics {
-
+        grid-row: 3;
+        font-size: medium;
     }
 
     &__attacks {
-
+        grid-row: 4;
+        grid-column: 1/ 4;
+        word-break: break-all;
+        white-space: normal;
+        font-size: medium;
     }
 
     &__weakness {
-
+        grid-row: 5;
+        font-size: medium;
     }
 
     &__retreat {
-
+        grid-row: 6;
+        font-size: medium;
     }
 }
