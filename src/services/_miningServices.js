@@ -15,11 +15,12 @@ export const postNewBlock = async (newBlock) => {
 	}
 
 	try {
-		const response = await fetch (BASE_URL + '/blockchain/blocks', requestOptions)
-		const data = await handleResponse(response)
-		return response.ok
+		const response = await fetch(BASE_URL + '/blockchain/blocks', requestOptions)
+		/*const data = await handleResponse(response)*/
+		/*console.log('%c response recived: ' + response, 'color: green')*/
+		return response
 	} catch (error) {
-		console.error(error)
+		console.error('MiningService: ' + error)
 	}
 }
 
@@ -48,6 +49,7 @@ async function handleResponse(response) {
 	const text = await response.text()
 	const data = text && JSON.parse(text)
 	if (!response.ok) {
+		console.log('%c response not ok', 'color: red')
 
 		if (response.status === 400) {
 		}

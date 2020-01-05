@@ -8,6 +8,8 @@ import {
 	fetchUserCards,
 	fetchOneCard
 } from '../services/_cardsServices'
+import Card from './Card'
+
 
 const CardsPage = () => {
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
@@ -76,7 +78,7 @@ const CardsPage = () => {
 			</form>
 			<div>
 				{cards.map(card => (
-					<img key={card.id} src={card.imageUrl} alt={card.name} />
+					<Card key={card.id} id={card.id} imageUrl={card.imageUrl} name={card.name}/>
 				))}
 			</div>
 			{showUserCards ? "" :

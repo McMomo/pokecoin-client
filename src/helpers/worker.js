@@ -12,7 +12,7 @@ export const calculateHash = (block) => {
 	return crypto.createHash('sha256').update(information).digest('hex')
 }
 
-export const mine = (prevHash, difficulty) => {
+export const mine = async (prevHash, difficulty) => {
 	let timestamp = new Date().getTime()
 	const max = Number.MAX_SAFE_INTEGER
 	let nonce = max / 2
