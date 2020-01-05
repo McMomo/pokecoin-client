@@ -13,7 +13,7 @@ const Card = (props) => {
     }
 
     return(
-        <img key={props.id} src={props.imageUrl} alt={props.name} onClick={diplayCardDetails} role="button"/>
+        <img className='cardPage__card' key={props.id} src={props.imageUrl} alt={props.name} onClick={diplayCardDetails} role="button"/>
     )
 }
 

@@ -17,6 +17,7 @@ import { Redirect } from 'react-router-dom'
 let workerInstance
 let result = false
 
+/* Mining and post-Request if Hash found */
 async function startMiner() {
 	workerInstance = worker()
 
@@ -43,6 +44,7 @@ async function startMiner() {
 	workerInstance.terminate()
 }
 
+/* Activate 'Animation' */
 const triggerEevee = () => {
 	const eevee = document.querySelector(".topnav__coin")
 	DOMHelpers.activate(eevee)
@@ -60,6 +62,7 @@ const MiningPage = () => {
 	const startBtn = document.querySelector(".js-start")
 	const stopBtn = document.querySelector(".js-stop")
 
+	/* Starts the miner and checks for repeat */
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()
@@ -73,6 +76,7 @@ const MiningPage = () => {
 		if (reapeatMiningFlag) setMiningStatus(true)
 	}, [miningStatus, reapeatMiningFlag])
 
+	/* Stop and rerun worker after switching Browser-Tab */
 	document.addEventListener('visibilitychange', function () {
 	    if (document.hidden) {
 			// stop running task
@@ -86,6 +90,7 @@ const MiningPage = () => {
 	    }
 	});
 
+	/* Stops worker after switching page in the Application */
 	useEffect(() => {
 		return () => {
 			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
@@ -93,6 +98,7 @@ const MiningPage = () => {
 		}
 	})
 
+	/* Switch for Mining-Image */
 	const getMiningPageImg = () => {
 		if (reapeatMiningFlag) {
 			document.body.style.backgroundColor = pikachu_colors.SEARCHING
@@ -107,9 +113,9 @@ const MiningPage = () => {
 		}
 	}
 
+	/* refreshs the wallet and trigger methode for eevee if coin found */
 	const dispatch = useDispatch()
 	const token = useSelector(state => state.authenticationReducer.token)
-
 	useAsyncEffect(async () => {
 		if (coinFound) {
 			try {
