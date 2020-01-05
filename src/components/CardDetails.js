@@ -47,10 +47,6 @@ const CardDetails = async (props) => {
         )
 
     } else if (card.supertype === supertypes.POKEMON) {
-        console.log(card.attacks)
-        card.attacks.map(a => (
-            console.log(a)
-        ))
         html = (`
             <div className='cardDetail'>
                 <div className='cardDetail__headline'> Cardname: ${card.name} </div>

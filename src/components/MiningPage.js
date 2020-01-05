@@ -21,7 +21,6 @@ async function startMiner() {
 	workerInstance = worker()
 
 	workerInstance.addEventListener('message', async (message) => {
-		/*console.log('New Message: ', message.data)*/
 		if (message.data.type !== 'RPC') {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			const response = await postNewBlock(message.data)
@@ -47,7 +46,6 @@ async function startMiner() {
 const triggerEevee = () => {
 	const eevee = document.querySelector(".topnav__coin")
 	DOMHelpers.activate(eevee)
-	/*console.log('%c eevee should be triggerd', 'color: brown')*/
 	setTimeout(() => {
 		DOMHelpers.deactivate(eevee)
 	}, 700)
@@ -75,25 +73,25 @@ const MiningPage = () => {
 		if (reapeatMiningFlag) setMiningStatus(true)
 	}, [miningStatus, reapeatMiningFlag])
 
-	// document.addEventListener('visibilitychange', function () {
-	//     if (document.hidden) {
-	// 		// stop running task
-	// 		setRepeatMiningFlag(false)
-	// 		setMiningStatus(false)
-	// 		workerInstance.terminate()
-	//     } else {
-	// 		// page has focus, begin running task
-	// 		setRepeatMiningFlag(true)
-	// 		setMiningStatus(true)
-	//     }
-	// });
+	document.addEventListener('visibilitychange', function () {
+	    if (document.hidden) {
+			// stop running task
+			setRepeatMiningFlag(false)
+			setMiningStatus(false)
+			workerInstance.terminate()
+	    } else {
+			// page has focus, begin running task
+			setRepeatMiningFlag(true)
+			setMiningStatus(true)
+	    }
+	});
 
-	// useEffect(() => {
-	// 	return () => {
-	// 		//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
-	// 		workerInstance.terminate()
-	// 	}
-	// })
+	useEffect(() => {
+		return () => {
+			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
+			workerInstance.terminate()
+		}
+	})
 
 	const getMiningPageImg = () => {
 		if (reapeatMiningFlag) {

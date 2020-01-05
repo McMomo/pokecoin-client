@@ -20,7 +20,9 @@ $basicLightbox__timing: ease; // Transition timing
     z-index: 1000;
     will-change: opacity;
     &__placeholder {
+        max-width: 400px;
         width: 50%;
+        min-width: 200px;
         height: 75%;
         border-radius: 10pt;
         overflow: auto;
