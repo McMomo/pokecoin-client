@@ -8,6 +8,7 @@
     "basiclightbox": "^5.0.2",
     "js-cookie": "^2.2.1",
     "node-sass": "^4.13.0",
+    "npm": "^6.13.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.3",
@@ -16,7 +17,11 @@
     "react-scripts": "3.2.0",
     "react-use-promise": "^0.2.0",
     "redux": "^4.0.4",
+<<<<<<< HEAD
     "typescript": "^3.7.4",
+=======
+    "request": "^2.88.0",
+>>>>>>> ce61e831c598f81fffadfeea9450659a711a64a0
     "use-async-effect": "^2.2.1",
     "workerize-loader": "^1.1.0"
   },

@@ -11,26 +11,40 @@ import { useSelector, useDispatch } from 'react-redux'
 import { userService } from '../services'
 import { shopActions } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
+import { Redirect } from 'react-router-dom'
+
 
 let workerInstance
 let result = false
 
+/* Mining and post-Request if Hash found */
 async function startMiner() {
 	workerInstance = worker()
 
 	workerInstance.addEventListener('message', async (message) => {
-		console.log('New Message: ', message.data)
 		if (message.data.type !== 'RPC') {
-			console.log("New Hash found: " + calculateHash(message.data))
-			result = await postNewBlock(message.data)
+			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
+			const response = await postNewBlock(message.data)
+			try {
+				if (response.ok){ 
+					result = true
+				} else {
+					result = false
+				}
+			} catch (error){
+				console.error('EventListener: ' + error)
+				result = false
+			}
 		}
 	})
 
 	const prevHash = await getPrevHash()
 	const getDiff = await getDifficulty()
 	await workerInstance.mine(prevHash, getDiff)
+	workerInstance.terminate()
 }
 
+/* Activate 'Animation' */
 const triggerEevee = () => {
 	const eevee = document.querySelector(".topnav__coin")
 	DOMHelpers.activate(eevee)
@@ -40,6 +54,7 @@ const triggerEevee = () => {
 }
 
 const MiningPage = () => {
+	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
 	const [coinFound, setCoinFound] = useState(false)
@@ -47,6 +62,10 @@ const MiningPage = () => {
 	const startBtn = document.querySelector(".js-start")
 	const stopBtn = document.querySelector(".js-stop")
 
+<<<<<<< HEAD
+=======
+	/* Starts the miner and checks for repeat */
+>>>>>>> ce61e831c598f81fffadfeea9450659a711a64a0
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()
@@ -54,33 +73,35 @@ const MiningPage = () => {
 
 			if (result) setCoinFound(true)
 			setMiningStatus(false)
+			
 		}
 		asyncMiner()
-		if (reapeatMiningFlag) {
-			setMiningStatus(true)
-		}
+		if (reapeatMiningFlag) setMiningStatus(true)
 	}, [miningStatus, reapeatMiningFlag])
 
-	// document.addEventListener('visibilitychange', function () {
-	//     if (document.hidden) {
-	// 		// stop running task
-	// 		setRepeatMiningFlag(false)
-	// 		setMiningStatus(false)
-	// 		workerInstance.terminate()
-	//     } else {
-	// 		// page has focus, begin running task
-	// 		setRepeatMiningFlag(true)
-	// 		setMiningStatus(true)
-	//     }
-	// });
+	/* Stop and rerun worker after switching Browser-Tab */
+	document.addEventListener('visibilitychange', function () {
+	    if (document.hidden) {
+			// stop running task
+			setRepeatMiningFlag(false)
+			setMiningStatus(false)
+			workerInstance.terminate()
+	    } else {
+			// page has focus, begin running task
+			setRepeatMiningFlag(true)
+			setMiningStatus(true)
+	    }
+	});
 
-	// useEffect(() => {
-	// 	return () => {
-	// 		//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
-	// 		workerInstance.terminate()
-	// 	}
-	// })
+	/* Stops worker after switching page in the Application */
+	useEffect(() => {
+		return () => {
+			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
+			workerInstance.terminate()
+		}
+	})
 
+	/* Switch for Mining-Image */
 	const getMiningPageImg = () => {
 		if (reapeatMiningFlag) {
 			document.body.style.backgroundColor = pikachu_colors.SEARCHING
@@ -95,9 +116,9 @@ const MiningPage = () => {
 		}
 	}
 
+	/* refreshs the wallet and trigger methode for eevee if coin found */
 	const dispatch = useDispatch()
 	const token = useSelector(state => state.authenticationReducer.token)
-
 	useAsyncEffect(async () => {
 		if (coinFound) {
 			try {
@@ -106,7 +127,7 @@ const MiningPage = () => {
 				const data = await response.json()
 				dispatch(shopActions.balanceSuccess(data.amount))
 
-				if (coinFound) triggerEevee()
+				if (result && coinFound) triggerEevee()
 
 			} catch (error) {
 				console.error(error)
@@ -118,7 +139,8 @@ const MiningPage = () => {
 
 
 	return (
-		<div>
+		<div>			
+			{!loggedIn ? <Redirect to='/login' /> : ''}
 			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)" />
 
 			<button className="mining__button js-start" onClick={

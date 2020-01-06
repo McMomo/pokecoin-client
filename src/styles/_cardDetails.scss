@@ -1,0 +1,83 @@
+$basicLightbox__background: rgba(0, 0, 0, .8); // Background color 
+$basicLightbox__zIndex: 1000; // Stack order 
+$basicLightbox__duration: .4s; // Transition duration 
+$basicLightbox__timing: ease; // Transition timing 
+
+
+
+.basicLightbox {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,.8);
+    opacity: .01;
+    transition: opacity .4s ease;
+    z-index: 1000;
+    will-change: opacity;
+    &__placeholder {
+        max-width: 400px;
+        width: 50%;
+        min-width: 200px;
+        height: 75%;
+        border-radius: 10pt;
+        overflow: auto;
+        padding: 20pt;
+        background-color: white;
+        color: black;
+        align-content: center;
+    }
+}
+
+.basicLightbox--visible {
+    opacity: 1;
+}
+
+.body *, body ::after, body ::before {
+    box-sizing: border-box;
+}
+
+.cardDetail {
+    display: grid;
+    justify-content: center;
+
+    &__headline {
+        grid-column: 1 / span 3;
+        grid-row: 1;
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    &__image {
+        justify-content: center;
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    &__basics {
+        grid-row: 3;
+        font-size: medium;
+    }
+
+    &__attacks {
+        grid-row: 4;
+        grid-column: 1/ 4;
+        word-break: break-all;
+        white-space: normal;
+        font-size: medium;
+    }
+
+    &__weakness {
+        grid-row: 5;
+        font-size: medium;
+    }
+
+    &__retreat {
+        grid-row: 6;
+        font-size: medium;
+    }
+}

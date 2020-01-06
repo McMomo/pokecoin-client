@@ -1,0 +1,70 @@
+.cardPage {
+    background-image: url("../images/pkm_card_background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    min-height: 1000px;
+
+    &__label {
+        color: color('dark');
+        font: inherit;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: $gutter/4;
+		margin: $gutter/2;
+        position: relative;
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 25%;
+    }
+
+    &__button {
+        appearance: none;
+		background: transparent;
+		color: currentcolor;
+		font: inherit;
+		border-radius: 0;
+		cursor: pointer;
+		outline: none;
+		text-transform: uppercase;
+		font-weight: bold;
+		border: 2px solid color('dark');
+		padding: $gutter/4;
+		margin: $gutter/2;
+        position: relative;
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 25%;
+
+		&:hover {
+			color: white;
+            background-color: color('dark');
+            
+			&::after {
+				transform: scaleX(1);
+			}
+		}    
+	}
+
+    &__cards-container {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    &__card {
+        padding: 10px;
+    }
+
+    &__loader {
+		position: absolute;
+		top: 50%;
+        left: 50%;
+        margin-top: 30px;
+		transform: translate(-50%, -50%);
+	}
+}

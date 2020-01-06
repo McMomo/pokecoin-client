@@ -8,6 +8,8 @@ import {
 	fetchUserCards,
 	fetchOneCard
 } from '../services/_cardsServices'
+import Card from './Card'
+import Pokeball from './PokeBall'
 
 const CardsPage = () => {
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
@@ -15,6 +17,7 @@ const CardsPage = () => {
 	const [showUserCards, setShowUserCards] = useState(true) // Checks what cards should be shown (false=all or true=user)
 	const [currentPage, setCurrentPage] = useState(0) // Current page of all Cards
 	const [nextPageExists, setNextPageExists] = useState() // Is true when more pages are avaivable
+	const [isLoading, setLoading] = useState(false)
 
 	//Gets the cards from currentPage+1 and checks if there are cards
 	const checkIfNextPageExists = async () => {
@@ -24,8 +27,9 @@ const CardsPage = () => {
 
 	//Gets UserCards from BE
 	const getUserCards = async () => {
+		setCards([])
 		const userCards = await fetchUserCards()
-		const cards = []
+		let cards = []
 
 		for (let i = 0; i < userCards.length; i++) {
 			const card = await fetchOneCard(userCards[i].cardId)
@@ -36,36 +40,49 @@ const CardsPage = () => {
 
 	//Gets all cards from a given Page from BE
 	const getPaginatedCards = async () => {
+		setCards([])
 		const cards = await fetchCards(currentPage)
 		setCards(cards)
 	}
 
 	//Changes CardList State when Button was toggled
 	useAsyncEffect(async () => {
+		setLoading(true)
 		if (showUserCards) {
 			await getUserCards()
 		} else {
 			await getPaginatedCards()
 			checkIfNextPageExists()
 		}
+		setLoading(false)
 	}, [showUserCards])
 
 	//Gets the cards of a given page when currentPage is changed
 	useAsyncEffect(async () => {
 		if (!showUserCards) {
+			setLoading(true)
+
 			await getPaginatedCards()
 			checkIfNextPageExists()
+			
+			setLoading(false)
 		}
 	}, [currentPage])
 
+	const removeDuplicates = (myArr, prop) => {
+		return myArr.filter((obj, pos, arr) => {
+			return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+		});
+	}
+
 	return (
-		<div>
+		<div className='cardPage'>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
-			<div id="ergebnis" className="ergebnis">
-				Es werden {showUserCards ? 'deine' : 'alle'} Karten gezeigt.
+			<div id="ergebnis" className="ergebnis cardPage__label">
+				{showUserCards ? 'Your' : 'All'} cards are displayed.
 			</div>
 			<form className='toggle__form'>
-				<button className='toggle__button' onClick={
+				<button className='toggle__button cardPage__button' onClick={
 					(e) => {
 						e.preventDefault()
 						setShowUserCards(!showUserCards)
@@ -74,16 +91,16 @@ const CardsPage = () => {
 					{showUserCards ? 'Show all cards' : 'Show my cards'}
 				</button>
 			</form>
-			<div>
-				{cards.map(card => (
-					<img key={card.id} src={card.imageUrl} alt={card.name} />
+			<div className='cardPage__cards-container'>
+				{removeDuplicates(cards, 'id').map(card => (
+					<Card key={card.id} id={card.id} imageUrl={card.imageUrl} name={card.name}/>
 				))}
 			</div>
 			{showUserCards ? "" :
 				<div className='pagination'>
 					{currentPage > 0 ?
 						<form className='previous__form'>
-							<button className='previous__button' onClick={
+							<button className='previous__button cardPage__button' onClick={
 								(e) => {
 									e.preventDefault()
 									setCurrentPage(currentPage - 1)
@@ -93,7 +110,7 @@ const CardsPage = () => {
 					: ""}
 					{nextPageExists ? 
 						<form className='next__form'>
-							<button className='next__button' onClick={
+							<button className='next__button cardPage__button' onClick={
 								(e) => {
 									e.preventDefault()
 									setCurrentPage(currentPage + 1)
@@ -102,6 +119,7 @@ const CardsPage = () => {
 						</form>
 					: "" }
 				</div>}
+			{isLoading ? <div className='cardPage__loader js-loader'><Pokeball /></div> : ''}
 		</div>
 	)
 }
