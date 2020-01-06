@@ -17,11 +17,9 @@
     "react-scripts": "3.2.0",
     "react-use-promise": "^0.2.0",
     "redux": "^4.0.4",
-<<<<<<< HEAD
-    "typescript": "^3.7.4",
-=======
     "request": "^2.88.0",
->>>>>>> ce61e831c598f81fffadfeea9450659a711a64a0
+    "stream-browserify": "^2.0.2",
+    "typescript": "^3.7.4",
     "use-async-effect": "^2.2.1",
     "workerize-loader": "^1.1.0"
   },

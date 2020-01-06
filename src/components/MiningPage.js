@@ -13,7 +13,6 @@ import { shopActions } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 import { Redirect } from 'react-router-dom'
 
-
 let workerInstance
 let result = false
 
@@ -62,10 +61,7 @@ const MiningPage = () => {
 	const startBtn = document.querySelector(".js-start")
 	const stopBtn = document.querySelector(".js-stop")
 
-<<<<<<< HEAD
-=======
 	/* Starts the miner and checks for repeat */
->>>>>>> ce61e831c598f81fffadfeea9450659a711a64a0
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()
