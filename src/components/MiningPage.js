@@ -47,7 +47,6 @@ const MiningPage = () => {
 	const startBtn = document.querySelector(".js-start")
 	const stopBtn = document.querySelector(".js-stop")
 
-
 	useEffect(() => {
 		async function asyncMiner() {
 			if (miningStatus) await startMiner()

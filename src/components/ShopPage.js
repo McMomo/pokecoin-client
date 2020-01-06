@@ -12,18 +12,12 @@ import {
 import * as basicLightbox from 'basiclightbox' 
 import Base from '../images/Charizard_Booster-2.png'
 
-//const basicLightbox = require('basiclightbox')
-
 const ShopPage = () => {
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [boosterNames, setBoosterNames] = useState([])
 	const [boosterPrice, setBoosterPrice] = useState([])
-	const [boughtBooster, setBoughtBooster] = useState([])
+	const [boughtCards, setBoughtCards] = useState([])
 	const [toBuyBooster, settoBuyBooster] = useState([])
-	
-	const instance = basicLightbox.create(`	
-		<p>Hello Pokemon</p>
-	`)
 
 	useAsyncEffect(async () => {
 		const boosterNames = await getBoosterList()
@@ -35,13 +29,25 @@ const ShopPage = () => {
 		setBoosterPrice(boosterPrice)
 	}, [])
 
+	useAsyncEffect(async () => {
+		if (boughtCards.length > 0) {
+			basicLightbox.create(`	
+					<div>
+						<p>Your new cards!</p>
+						${boughtCards.map(card => (
+							`<img key=${card.id} src=${card.imageUrl} alt=${card.name} />`
+						))}
+					</div>
+				`).show()
+			setBoughtCards([])
+		}
+	}, [boughtCards])
+
 	useAsyncEffect(() => {
 		async function asyncBuyBooster() {
 			if (toBuyBooster.length > 0) {
-				//const newBooster = await getBuyNewBooster(toBuyBooster)
-				//setBoughtBooster(newBooster)
-				//console.log(boughtBooster) 
-				
+				const newBooster = await getBuyNewBooster(toBuyBooster)
+				setBoughtCards(newBooster.cards)
 				settoBuyBooster([])
 			}
 		}
@@ -58,7 +64,6 @@ const ShopPage = () => {
 					(e) => {
 						e.preventDefault()
 						settoBuyBooster(name)
-						instance.show()
 					}
 				}>
 					Buy for {boosterPrice} Pokecoins

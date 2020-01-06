@@ -1,4 +1,4 @@
-import { BASE_URL, authenticationConstants } from '../helpers/constants'
+import { BASE_URL } from '../helpers/constants'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
