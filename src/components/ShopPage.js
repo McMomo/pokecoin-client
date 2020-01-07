@@ -32,10 +32,10 @@ const ShopPage = () => {
 	useAsyncEffect(async () => {
 		if (boughtCards.length > 0) {
 			basicLightbox.create(`	
-					<div>
-						<p>Your new cards!</p>
+					<div className='shop__boughtCards'>
+						<p className='shop__boughtCardText'>Your new cards!</p>
 						${boughtCards.map(card => (
-							`<img key=${card.id} src=${card.imageUrl} alt=${card.name} />`
+							`<img className='shop__boughtCardImage' key=${card.id} src=${card.imageUrl} alt=${card.name} />`
 						))}
 					</div>
 				`).show()
@@ -54,30 +54,27 @@ const ShopPage = () => {
 		asyncBuyBooster()
 	}, [toBuyBooster])
 
-	const boosterlist = boosterNames.map(name => (
-		<div key={name}>
-			<p>{name}</p>
-			<img key={name} src={`${ Base }`} alt={name}/>
-			<Link to={`/shop/${ name }`}>Show what could be inside the booster</ Link>
-			<form className='shop__form'>
-				<button className='shop__button' type='submit' onClick={ 
-					(e) => {
-						e.preventDefault()
-						settoBuyBooster(name)
-					}
-				}>
-					Buy for {boosterPrice} Pokecoins
-				</button>
-			</form>
-		</ div>
-	))
-
+	
 	return (
-		<div>
+		<div className='shop'>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
-			<div>
-				{boosterlist}
-			</div>
+			{boosterNames.map(name => (
+			<div className='shop__booster'>
+				<p className='shop__boosterName'>{name}</p>
+				<img className='shop__boosterImage' key={name} src={`${ Base }`} alt={name}/>
+				<Link to={`/shop/${ name }`} className='shop__link'>Show what could be inside the booster</ Link>
+				<form className='shop__form'>
+					<button className='shop__buyButton' type='submit' onClick={ 
+						(e) => {
+							e.preventDefault()
+							settoBuyBooster(name)
+						}
+					}>
+						Buy for {boosterPrice} Pokecoins
+					</button>
+				</form>
+			</ div>
+		))}
 		</div>
 	)
 }

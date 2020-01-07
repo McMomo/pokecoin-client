@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { useAsyncEffect } from 'use-async-effect'
+import { Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { 
     Link,
     useParams
@@ -10,6 +12,7 @@ import {
 } from '../services/_shopServices';
 
 const BoosterDetails = () => {
+    const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
     let { boosterName } = useParams();
     const [booster, setBooster] = useState([])
 
@@ -19,13 +22,16 @@ const BoosterDetails = () => {
     }, [])
     
     const boosterCards = booster.map(cards => (
-		<img key={cards.name} src={cards.imageUrl} alt={cards.name} />
+		<img className='boosterDetails__cards' key={cards.name} src={cards.imageUrl} alt={cards.name} />
 	))
 
     return (
-        <div className='BoosterDetail'>
-            { boosterCards }
-            <Link to={`/shop`}>Go Back</ Link>
+        <div className='boosterDetails'>
+            {!loggedIn ? <Redirect to='/login' /> : ''}
+            <div className='boosterDetails__allCards'>
+                { boosterCards }
+            </div>
+            <Link to={`/shop`} className='boosterDetails__backButton'>Go Back</ Link>
         </div>
     )
 }

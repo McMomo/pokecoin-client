@@ -1,0 +1,39 @@
+.boosterDetails {
+    &__cards {
+        padding: 10px;
+    }
+
+    &__allCards {
+        text-align: center;
+    }
+
+    &__backButton {
+        appearance: none;
+		background: transparent;
+		color: currentcolor;
+		font: inherit;
+		border-radius: 0;
+		cursor: pointer;
+		outline: none;
+		text-transform: uppercase;
+		font-weight: bold;
+		border: 2px solid color('dark');
+		padding: $gutter/4;
+		margin: $gutter/2;
+        position: relative;
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 20%;
+
+		&:hover {
+			color: white;
+            background-color: color('dark');
+            
+			&::after {
+				transform: scaleX(1);
+			}
+		} 
+    }
+}
