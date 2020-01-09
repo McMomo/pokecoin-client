@@ -35,10 +35,10 @@ const fetchWalletBalance = async (token) => {
 
 	const requestOptions = {
 		method: 'GET',
-		headers: { 
-            'Content-Type': 'application/json',
-            'token': token    
-        },
+		headers: {
+			'Content-Type': 'application/json',
+			'token': token
+		},
 	}
 
 	return fetch(BASE_URL + '/wallet/balance', requestOptions)

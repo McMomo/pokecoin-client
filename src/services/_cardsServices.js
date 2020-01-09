@@ -8,16 +8,16 @@ export const fetchCards = async (page) => {
 }
 
 export const fetchUserCards = async () => {
-    const token = Cookies.get('token')    
-    const requestOptions = {
+	const token = Cookies.get('token')
+	const requestOptions = {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
 			'token': token
-        },
-    }
+		},
+	}
 
-    return await axios.get(BASE_URL + `/cards/usercards`, requestOptions)	
+	return await axios.get(BASE_URL + `/cards/usercards`, requestOptions)
 		.then(data => {
 			return data.data
 		})

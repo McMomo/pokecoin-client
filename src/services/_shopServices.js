@@ -9,7 +9,7 @@ export const getBuyNewBooster = (boosterName) => {
 		headers: {
 			'Content-Type': 'application/json',
 			'token': token
-        },
+		},
 	}
 
 	return fetch(BASE_URL + `/cards/packages/${boosterName}/buyDefaultPackage`, requestOptions)
@@ -20,34 +20,34 @@ export const getBuyNewBooster = (boosterName) => {
 }
 
 export const getBoosterList = async () => {
-    try {
-        const response = await fetch(BASE_URL + `/cards/packages`)
-        const data = await handleResponse(response)
-	    return data
-    } catch (errors) {
-        console.log("No Boosters are available")
-    }
+	try {
+		const response = await fetch(BASE_URL + `/cards/packages`)
+		const data = await handleResponse(response)
+		return data
+	} catch (errors) {
+		console.log("No Boosters are available")
+	}
 }
 
 export const getBooster = async (boosterName) => {
-    try {
-        const response = await fetch(BASE_URL + `/cards/packages/${ boosterName }`)
-        const data = await handleResponse(response)
-        return data
-    } catch (errors) {
-        console.log("No Booster was found")
-    }
+	try {
+		const response = await fetch(BASE_URL + `/cards/packages/${ boosterName }`)
+		const data = await handleResponse(response)
+		return data
+	} catch (errors) {
+		console.log("No Booster was found")
+	}
 }
 
 
 export const getBoosterPrice = async () => {
-    try {
-        const response = await fetch(BASE_URL + `/cards/packages/currentPackageCost`)
-        const data = await handleResponse(response)
-        return data
-    } catch (errors) {
-        console.log(errors)
-    }
+	try {
+		const response = await fetch(BASE_URL + `/cards/packages/currentPackageCost`)
+		const data = await handleResponse(response)
+		return data
+	} catch (errors) {
+		console.log(errors)
+	}
 }
 
 function handleResponse(response) {

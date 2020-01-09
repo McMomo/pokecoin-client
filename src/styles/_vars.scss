@@ -23,5 +23,11 @@ $bpXXL: 1920px;
 $duration: .3s;
 $timing: cubic-bezier(.51, .92, .24, 1);
 
-// Typography -------------------------------------------------------- //
+// BasicLightBox ----------------------------------------------- //
+$basicLightbox__background: rgba(0, 0, 0, .8);
+$basicLightbox__zIndex: 1000;
+$basicLightbox__duration: .4s;
+$basicLightbox__timing: ease;
+
+// Typography -------------------------------------------------- //
 $fontStack: normal 400 100%/1.6 'PokemonSolid', Helvetica, Arial, sans-serif;

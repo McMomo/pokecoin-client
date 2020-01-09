@@ -1,8 +1,8 @@
 .mining {
 	align-items: center;
 
-    &__button {
-        appearance: none;
+	&__button {
+		appearance: none;
 		background: transparent;
 		color: currentcolor;
 		font: inherit;
@@ -14,12 +14,12 @@
 		border: 2px solid color('dark');
 		padding: $gutter/4;
 		margin: $gutter/2;
-        position: relative;
-        text-align: center;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 25%;
+		position: relative;
+		text-align: center;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 25%;
 
 		&::after {
 			content: '';
@@ -40,8 +40,8 @@
 			&::after {
 				transform: scaleX(1);
 			}
-		}    
-		
+		}
+
 		&.active {
 			color: white;
 			background: color('dark');
@@ -52,11 +52,11 @@
 		}
 	}
 
-    &__img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 5%;
+	&__img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5%;
 		width: 30%;
-    }
+	}
 }

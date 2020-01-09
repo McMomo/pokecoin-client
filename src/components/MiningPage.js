@@ -25,7 +25,7 @@ async function startMiner() {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			const response = await postNewBlock(message.data)
 			try {
-				if (response.ok){ 
+				if (response.ok){
 					result = true
 				} else {
 					result = false
@@ -69,7 +69,7 @@ const MiningPage = () => {
 
 			if (result) setCoinFound(true)
 			setMiningStatus(false)
-			
+
 		}
 		asyncMiner()
 		if (reapeatMiningFlag) setMiningStatus(true)
@@ -77,16 +77,16 @@ const MiningPage = () => {
 
 	/* Stop and rerun worker after switching Browser-Tab */
 	document.addEventListener('visibilitychange', function () {
-	    if (document.hidden) {
+		if (document.hidden) {
 			// stop running task
 			setRepeatMiningFlag(false)
 			setMiningStatus(false)
 			workerInstance.terminate()
-	    } else {
+		} else {
 			// page has focus, begin running task
 			setRepeatMiningFlag(true)
 			setMiningStatus(true)
-	    }
+		}
 	});
 
 	/* Stops worker after switching page in the Application */
@@ -135,7 +135,7 @@ const MiningPage = () => {
 
 
 	return (
-		<div>			
+		<div>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
 			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)" />
 
