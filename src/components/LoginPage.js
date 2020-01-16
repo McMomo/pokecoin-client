@@ -41,7 +41,7 @@ const LoginPage = (props) => {
 
 	return (
 		<div className='login'>
-			{loggedIn ? <Redirect to='/cards' /> : ''}
+			{loggedIn ? <Redirect to='/mining' /> : ''}
 			<div className='login__background'></div>
 			<form className='login__form' autoComplete='off'>
 				<input className='login__input js-username' type='text' placeholder='Username' name='username' onChange={handleChange} />
