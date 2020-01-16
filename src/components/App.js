@@ -12,6 +12,7 @@ import NavBar from './NavBar'
 import LoginPage from './LoginPage'
 import BoosterDetails from './BoosterDetails'
 import RegistrationPage from './RegistrationPage'
+import NotFoundPage from './NotFoundPage'
 
 function App() {
 	return (
@@ -39,6 +40,7 @@ function App() {
 				<Route path='/shop/:boosterName'>
 					<BoosterDetails />
 				</Route>
+				<Route component={NotFoundPage} />
 			</Switch>
 		</Router>
 	)
