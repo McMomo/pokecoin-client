@@ -23,7 +23,7 @@ const NavBar = () => {
 	const fetchCoins = async () => {
 		try {
 			const response = await userService.fetchWalletBalance(token)
-			if(!response.ok) throw new Error(response.error)
+			if (!response.ok) throw new Error(response.error)
 			const data = await response.json()
 			dispatch(shopActions.balanceSuccess(data.amount))
 		} catch (error) {
@@ -31,7 +31,7 @@ const NavBar = () => {
 		}
 	}
 
-	useAsyncEffect(() => fetchCoins() ,[loggedIn])
+	useAsyncEffect(() => fetchCoins(), [loggedIn])
 
 	return (
 

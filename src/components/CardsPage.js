@@ -100,30 +100,30 @@ const CardsPage = () => {
 					))}
 					{showUserCards ? "" :
 						<div className="cardPage__textWrapper">
-<div className='pagination'>
-							{currentPage > 0 ?
-								<form className='previous__form'>
-									<button className='previous__button cardPage__button' onClick={
-										(e) => {
-											e.preventDefault()
-											setCurrentPage(currentPage - 1)
-										}
-									}>previous</button>
-								</form>
-								: ""}
-							{nextPageExists ?
-								<form className='next__form'>
-									<button className='next__button cardPage__button' onClick={
-										(e) => {
-											e.preventDefault()
-											setCurrentPage(currentPage + 1)
-										}
-									}>next</button>
-								</form>
-								: ""}
+							<div className='pagination'>
+								{currentPage > 0 ?
+									<form className='previous__form'>
+										<button className='previous__button cardPage__button' onClick={
+											(e) => {
+												e.preventDefault()
+												setCurrentPage(currentPage - 1)
+											}
+										}>previous</button>
+									</form>
+									: ""}
+								{nextPageExists ?
+									<form className='next__form'>
+										<button className='next__button cardPage__button' onClick={
+											(e) => {
+												e.preventDefault()
+												setCurrentPage(currentPage + 1)
+											}
+										}>next</button>
+									</form>
+									: ""}
+							</div>
 						</div>
-						</div>
-						}
+					}
 					{isLoading ? <div className='cardPage__loader js-loader'><Pokeball /></div> : ''}
 				</div>
 

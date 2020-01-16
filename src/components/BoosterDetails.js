@@ -29,7 +29,7 @@ const BoosterDetails = () => {
 		<div className='boosterDetails'>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
 			<div className='boosterDetails__allCards'>
-				{ boosterCards }
+				{boosterCards}
 			</div>
 			<Link to={`/shop`} className='boosterDetails__backButton'>Go Back</ Link>
 		</div>

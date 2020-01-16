@@ -35,8 +35,8 @@ const ShopPage = () => {
 					<div className='shop__boughtCards'>
 						<p className='shop__boughtCardText'>Your new cards!</p>
 						${boughtCards.map(card => (
-							`<img className='shop__boughtCardImage' key=${card.id} src=${card.imageUrl} alt=${card.name} />`
-						))}
+				`<img className='shop__boughtCardImage' key=${card.id} src=${card.imageUrl} alt=${card.name} />`
+			))}
 					</div>
 				`).show()
 			setBoughtCards([])
@@ -59,22 +59,22 @@ const ShopPage = () => {
 		<div className='shop'>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
 			{boosterNames.map(name => (
-			<div className='shop__booster' key={name}>
-				<p className='shop__boosterName'>{name}</p>
-				<img className='shop__boosterImage' key={name} src={`${ Base }`} alt={name}/>
-				<Link to={`/shop/${ name }`} className='shop__link'>Show what could be inside the booster</ Link>
-				<form className='shop__form'>
-					<button className='shop__buyButton' type='submit' onClick={
-						(e) => {
-							e.preventDefault()
-							settoBuyBooster(name)
-						}
-					}>
-						Buy for {boosterPrice} Pokecoins
+				<div className='shop__booster' key={name}>
+					<p className='shop__boosterName'>{name}</p>
+					<img className='shop__boosterImage' key={name} src={`${Base}`} alt={name} />
+					<Link to={`/shop/${name}`} className='shop__link'>Show what could be inside the booster</ Link>
+					<form className='shop__form'>
+						<button className='shop__buyButton' type='submit' onClick={
+							(e) => {
+								e.preventDefault()
+								settoBuyBooster(name)
+							}
+						}>
+							Buy for {boosterPrice} Pokecoins
 					</button>
-				</form>
-			</ div>
-		))}
+					</form>
+				</ div>
+			))}
 		</div>
 	)
 }

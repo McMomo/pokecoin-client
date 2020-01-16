@@ -25,12 +25,12 @@ async function startMiner() {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			const response = await postNewBlock(message.data)
 			try {
-				if (response.ok){
+				if (response.ok) {
 					result = true
 				} else {
 					result = false
 				}
-			} catch (error){
+			} catch (error) {
 				console.error('EventListener: ' + error)
 				result = false
 			}
