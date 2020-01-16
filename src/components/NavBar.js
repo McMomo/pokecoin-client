@@ -36,13 +36,12 @@ const NavBar = () => {
 	return (
 
 		<div className='topnav'>
-			<Link className='topnav__item' to='/'>Homé</Link>
 			<Link className='topnav__item' to='/cards'>Cards</Link>
 			<Link className='topnav__item' to='/shop'>Shop</Link>
 			<Link className='topnav__item' to='/mining'>Mining</Link>
 			<div className='topnav__section_right'>
-				{loggedIn ? <span className='topnav__item'>{coinAmount} <img src={Eevee} className="topnav__coin" alt="Eevee piggy bank" /></span> : ''}
-				
+				{loggedIn ? <span className='topnav__item topnav__item--noEffect'>{coinAmount} PokéCoins<img src={Eevee} className="topnav__coin" alt="Eevee piggy bank" /></span> : ''}
+
 				{!loggedIn ?
 					<Link className='topnav__item' to='/login'>Login</Link> :
 					<div className='topnav__item' onClick={handleLogout}>Logout</div>

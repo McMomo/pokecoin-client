@@ -18,6 +18,7 @@
 		padding: $gutter/2 $gutter;
 		background-color: #333;
 		position: relative;
+		cursor: pointer;
 
 		&::after {
 			content: '';
@@ -31,10 +32,14 @@
 			transition: transform $duration $timing;
 		}
 
-		&:hover {
+		&:hover:not(.topnav__item--noEffect) {
 			&::after {
 				transform: scale(1);
 			}
+		}
+
+		&--noEffect {
+			cursor: default;
 		}
 	}
 

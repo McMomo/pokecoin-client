@@ -3,9 +3,9 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
+	Redirect,
 } from 'react-router-dom'
 import CardsPage from './CardsPage'
-import Home from './HomePage'
 import Shop from './ShopPage'
 import Mining from './MiningPage'
 import NavBar from './NavBar'
@@ -19,7 +19,7 @@ function App() {
 			<NavBar />
 			<Switch>
 				<Route exact path='/'>
-					<div><Home /></div>
+					<Redirect to='/mining' />
 				</Route>
 				<Route exact path='/cards'>
 					<div><CardsPage /></div>
