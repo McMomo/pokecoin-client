@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticationActions, shopActions } from '../actions'
 import Eevee from '../images/eevee-patreon.png'
@@ -36,14 +36,14 @@ const NavBar = () => {
 	return (
 
 		<div className='topnav'>
-			<Link className='topnav__item' to='/cards'>Cards</Link>
-			<Link className='topnav__item' to='/shop'>Shop</Link>
-			<Link className='topnav__item' to='/mining'>Mining</Link>
+			<NavLink className='topnav__item' to='/cards' activeClassName="active">Cards</NavLink>
+			<NavLink className='topnav__item' to='/shop' activeClassName="active">Shop</NavLink>
+			<NavLink className='topnav__item' to='/mining' activeClassName="active">Mining</NavLink>
 			<div className='topnav__section_right'>
 				{loggedIn ? <span className='topnav__item topnav__item--noEffect'>{coinAmount} PokéCoins<img src={Eevee} className="topnav__coin" alt="Eevee piggy bank" /></span> : ''}
 
 				{!loggedIn ?
-					<Link className='topnav__item' to='/login'>Login</Link> :
+					<NavLink className='topnav__item' to='/login'>Login</NavLink> :
 					<div className='topnav__item' onClick={handleLogout}>Logout</div>
 				}
 

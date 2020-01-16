@@ -7,7 +7,7 @@
 	width: 100%;
 	display: flex;
 	font-size: 1.25em;
-	font-weight: 100;
+	font-weight: 300;
 	height: 60px;
 	align-items: center;
 	padding-left: $gutter;
@@ -41,6 +41,10 @@
 		&--noEffect {
 			cursor: default;
 		}
+
+		&.active {
+			border-bottom: 1px solid darkred;
+		}
 	}
 
 	&__section_right {
@@ -51,18 +55,9 @@
 
 	&__coin {
 		position: absolute;
-		right: 0;
-		transform: translateX(50%);
-		transition: transform $duration $timing;
+		top: 0;
+		right: 100%;
 		pointer-events: none;
-
-		&.active {
-			position: absolute;
-			right: 0;
-			transform: translateX(0);
-			transition: transform $duration $timing;
-			pointer-events: none;
-
-		}
+		height: 50px;
 	}
 }
