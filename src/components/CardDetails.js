@@ -3,23 +3,6 @@ import { fetchOneCard } from '../services/_cardsServices'
 import ReactDOMServer from 'react-dom/server'
 import { supertypes } from '../helpers/constants'
 
-const infoMapper = (infos) => {
-	return (
-		<div>{infos.map(info => (
-			<p>{info.type ? info.type : ''}  {info.value ? ' - ' + info.value : ''}</p>
-		))}</div>
-	)
-}
-
-const IsJsonString = (str) => {
-	try {
-		JSON.parse(str);
-	} catch (e) {
-		return false;
-	}
-	return true;
-}
-
 const CardDetails = async (props) => {
 
 	const card = await fetchOneCard(props.id)
