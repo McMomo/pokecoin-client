@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 import { useAsyncEffect } from 'use-async-effect'
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { 
+import {
 	getBoosterList,
 	getBoosterPrice,
 	getBuyNewBooster
 } from '../services/_shopServices'
-import * as basicLightbox from 'basiclightbox' 
+import * as basicLightbox from 'basiclightbox'
 import Base from '../images/Charizard_Booster-2.png'
 
 const ShopPage = () => {
@@ -31,7 +31,7 @@ const ShopPage = () => {
 
 	useAsyncEffect(async () => {
 		if (boughtCards.length > 0) {
-			basicLightbox.create(`	
+			basicLightbox.create(`
 					<div className='shop__boughtCards'>
 						<p className='shop__boughtCardText'>Your new cards!</p>
 						${boughtCards.map(card => (
@@ -54,17 +54,17 @@ const ShopPage = () => {
 		asyncBuyBooster()
 	}, [toBuyBooster])
 
-	
+
 	return (
 		<div className='shop'>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
 			{boosterNames.map(name => (
-			<div className='shop__booster'>
+			<div className='shop__booster' key={name}>
 				<p className='shop__boosterName'>{name}</p>
 				<img className='shop__boosterImage' key={name} src={`${ Base }`} alt={name}/>
 				<Link to={`/shop/${ name }`} className='shop__link'>Show what could be inside the booster</ Link>
 				<form className='shop__form'>
-					<button className='shop__buyButton' type='submit' onClick={ 
+					<button className='shop__buyButton' type='submit' onClick={
 						(e) => {
 							e.preventDefault()
 							settoBuyBooster(name)
