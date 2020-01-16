@@ -64,7 +64,7 @@ const CardsPage = () => {
 
 			await getPaginatedCards()
 			checkIfNextPageExists()
-			
+
 			setLoading(false)
 		}
 	}, [currentPage])
@@ -78,48 +78,57 @@ const CardsPage = () => {
 	return (
 		<div className='cardPage'>
 			{!loggedIn ? <Redirect to='/login' /> : ''}
-			<div id="ergebnis" className="ergebnis cardPage__label">
-				{showUserCards ? 'Your' : 'All'} cards are displayed.
-			</div>
-			<form className='toggle__form'>
-				<button className='toggle__button cardPage__button' onClick={
-					(e) => {
-						e.preventDefault()
-						setShowUserCards(!showUserCards)
-					}
-				}>
-					{showUserCards ? 'Show all cards' : 'Show my cards'}
-				</button>
-			</form>
-			<div className='cardPage__cards-container'>
-				{removeDuplicates(cards, 'id').map(card => (
-					<Card key={card.id} id={card.id} imageUrl={card.imageUrl} name={card.name}/>
-				))}
-			</div>
-			{showUserCards ? "" :
-				<div className='pagination'>
-					{currentPage > 0 ?
-						<form className='previous__form'>
-							<button className='previous__button cardPage__button' onClick={
+			<div className="cardPage__blackBox">
+				<div className='cardPage__cards-container'>
+					<div className="cardPage__textWrapper">
+						<div id="ergebnis" className="ergebnis cardPage__label">
+							{showUserCards ? 'Your' : 'All'} cards are displayed.
+						</div>
+						<form className='toggle__form'>
+							<button className='toggle__button cardPage__button' onClick={
 								(e) => {
 									e.preventDefault()
-									setCurrentPage(currentPage - 1)
+									setShowUserCards(!showUserCards)
 								}
-							}>previous</button>
+							}>
+								{showUserCards ? 'Show all cards' : 'Show my cards'}
+							</button>
 						</form>
-					: ""}
-					{nextPageExists ? 
-						<form className='next__form'>
-							<button className='next__button cardPage__button' onClick={
-								(e) => {
-									e.preventDefault()
-									setCurrentPage(currentPage + 1)
-								}
-							}>next</button>
-						</form>
-					: "" }
-				</div>}
-			{isLoading ? <div className='cardPage__loader js-loader'><Pokeball /></div> : ''}
+					</div>
+					{removeDuplicates(cards, 'id').map(card => (
+						<Card key={card.id} id={card.id} imageUrl={card.imageUrl} name={card.name} />
+					))}
+					{showUserCards ? "" :
+						<div className="cardPage__textWrapper">
+<div className='pagination'>
+							{currentPage > 0 ?
+								<form className='previous__form'>
+									<button className='previous__button cardPage__button' onClick={
+										(e) => {
+											e.preventDefault()
+											setCurrentPage(currentPage - 1)
+										}
+									}>previous</button>
+								</form>
+								: ""}
+							{nextPageExists ?
+								<form className='next__form'>
+									<button className='next__button cardPage__button' onClick={
+										(e) => {
+											e.preventDefault()
+											setCurrentPage(currentPage + 1)
+										}
+									}>next</button>
+								</form>
+								: ""}
+						</div>
+						</div>
+						}
+					{isLoading ? <div className='cardPage__loader js-loader'><Pokeball /></div> : ''}
+				</div>
+
+			</div>
+
 		</div>
 	)
 }

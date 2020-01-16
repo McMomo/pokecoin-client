@@ -4,7 +4,24 @@
 	background-attachment: fixed;
 	background-size: cover;
 	background-position: center;
-	min-height: 1000px;
+	min-height: calc(100vh - 60px);
+	width: 100%;
+	position: absolute;
+	display: flex;
+
+	&__blackBox {
+		position: relative;
+		display: flex;
+		height: 100%;
+		width: 100%;
+		background: rgba(0, 0, 0, .8);
+		z-index: 1;
+	}
+
+	&__textWrapper {
+		padding: $gutter;
+		background: white;
+	}
 
 	&__label {
 		color: color('dark');
@@ -52,12 +69,15 @@
 	}
 
 	&__cards-container {
+		width: 100%;
 		text-align: center;
-		padding-top: 20px;
+		min-height: calc(100vh - 60px);
 	}
 
 	&__card {
-		padding: 10px;
+		margin: 10px;
+		cursor: pointer;
+		border-radius: 5px;
 	}
 
 	&__loader {
