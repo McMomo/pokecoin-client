@@ -93,6 +93,7 @@ const MiningPage = () => {
 	useEffect(() => {
 		return () => {
 			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
+			document.body.style.backgroundColor = '#ffffff'
 			workerInstance.terminate()
 		}
 	})
