@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import { SnackbarProvider } from 'notistack';
 
 import 'basiclightbox/dist/basicLightbox.min.css'
 import './styles/main.scss'
@@ -15,4 +16,8 @@ export const store = createStore(
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'))
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+document.getElementById('root'))

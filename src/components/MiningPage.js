@@ -13,6 +13,8 @@ import { shopActions } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 import { Redirect } from 'react-router-dom'
 
+import {ToastsContainer, ToastsStore} from 'react-toasts';
+
 let workerInstance
 let result = false
 
@@ -118,6 +120,7 @@ const MiningPage = () => {
 	const token = useSelector(state => state.authenticationReducer.token)
 	useAsyncEffect(async () => {
 		if (coinFound) {
+			ToastsStore.info('Ein neuer Hash für einen Coin wurde')
 			try {
 				const response = await userService.fetchWalletBalance(token)
 				if (!response.ok) throw new Error(response.error)
@@ -125,9 +128,10 @@ const MiningPage = () => {
 				dispatch(shopActions.balanceSuccess(data.amount))
 
 				if (result && coinFound) triggerEevee()
-
+				ToastsStore.success("Ein Coin wurde gefunden.")
 			} catch (error) {
 				console.error(error)
+				ToastsStore.warning("Der gefundene Coin war nicht in Ordnung :(")
 			} finally {
 				setCoinFound(false)
 			}
@@ -144,6 +148,7 @@ const MiningPage = () => {
 				() => {
 					setRepeatMiningFlag(true)
 					setMiningStatus(true)
+					ToastsStore.success("Mining wurde gestartet.")
 				}
 			}>Start
 			</button>
@@ -152,6 +157,7 @@ const MiningPage = () => {
 					setRepeatMiningFlag(false)
 					setMiningStatus(false)
 					workerInstance.terminate()
+					ToastsStore.success("Mining wurde beendet.")
 				}
 			}>Stop
 			</button>

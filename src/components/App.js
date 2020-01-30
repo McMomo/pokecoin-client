@@ -14,6 +14,9 @@ import BoosterDetails from './BoosterDetails'
 import RegistrationPage from './RegistrationPage'
 import NotFoundPage from './NotFoundPage'
 
+import {ToastsContainer, ToastsStore} from 'react-toasts';
+import {ToastsContainerPosition} from 'react-toasts'
+
 function App() {
 	return (
 		<Router>
@@ -42,6 +45,7 @@ function App() {
 				</Route>
 				<Route component={NotFoundPage} />
 			</Switch>
+			<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} lightBackground/>
 		</Router>
 	)
 }

@@ -1,5 +1,6 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 export const postNewBlock = async (newBlock) => {
 
@@ -18,7 +19,7 @@ export const postNewBlock = async (newBlock) => {
 		const response = await fetch(BASE_URL + '/blockchain/blocks', requestOptions)
 		return response
 	} catch (error) {
-		console.error('MiningService: ' + error)
+		ToastsStore.warning("Mining war nicht erfolgreich.")
 	}
 }
 
@@ -28,7 +29,7 @@ export const getDifficulty = async () => {
 		const data = await handleResponse(response)
 		return data
 	} catch (error) {
-		console.error(error)
+		ToastsStore.warning("Aktuell difficulty für das minen wurde nicht gefunden..")
 	}
 }
 
@@ -39,7 +40,7 @@ export const getPrevHash = async () => {
 		return data.hash
 	}
 	catch (error) {
-		console.error(error)
+		ToastsStore.warning("Vorherige Hash wurde nicht gefunden.")
 	}
 }
 

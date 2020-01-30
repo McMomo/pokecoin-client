@@ -1,9 +1,9 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 export const getBuyNewBooster = (boosterName) => {
 	const token = Cookies.get('token')
-
 	const requestOptions = {
 		method: 'GET',
 		headers: {
@@ -25,7 +25,7 @@ export const getBoosterList = async () => {
 		const data = await handleResponse(response)
 		return data
 	} catch (errors) {
-		console.log("No Boosters are available")
+		ToastsStore.warning("Aktuell sind keine Booster verfügbar.")
 	}
 }
 
@@ -35,10 +35,9 @@ export const getBooster = async (boosterName) => {
 		const data = await handleResponse(response)
 		return data
 	} catch (errors) {
-		console.error("No Booster was found")
+		ToastsStore.warning("Booster wurde nicht gefunden.")
 	}
 }
-
 
 export const getBoosterPrice = async () => {
 	try {
@@ -46,7 +45,7 @@ export const getBoosterPrice = async () => {
 		const data = await handleResponse(response)
 		return data
 	} catch (errors) {
-		console.error(errors)
+		ToastsStore.warning("Aktuell ist der Preis nicht verfügbar.")
 	}
 }
 

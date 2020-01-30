@@ -1,4 +1,11 @@
 .boosterDetails {
+	background-image: url("../images/pkm_card_background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+	min-height: 1000px;
+	
 	&__cards {
 		padding: 10px;
 	}
