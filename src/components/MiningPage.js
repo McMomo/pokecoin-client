@@ -24,11 +24,15 @@ async function startMiner() {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			await postNewBlock(message.data)
 				.then((response) => {
+					if(!response.ok) throw new Error("HTTP Status " + response.status)
 					return response.json()
 				})
 				.then(json => {
 					console.log(json)
 					store.dispatch(fetchCoins())
+				})
+				.catch(error => {
+					console.error(error)
 				})
 		}
 	})

@@ -38,5 +38,4 @@ export const mine = (prevHash, difficulty) => {
 			return
 		}
 	}
-	console.log('out of the while loop')
 }
