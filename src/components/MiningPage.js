@@ -6,15 +6,14 @@ import { calculateHash } from '../helpers/worker'
 import Pikachu_searching from '../images/pokecoin_pikachu_searching.gif'
 import Pikachu_paused from '../images/pokecoin_pikachu_paused.gif'
 import { pikachu_colors } from '../helpers/constants'
-import { useAsyncEffect } from 'use-async-effect'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { fetchCoins } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 import { Redirect } from 'react-router-dom'
+import { store } from '..'
 
 
 let workerInstance
-let result = false
 
 /* Mining and post-Request if Hash found */
 async function startMiner() {
@@ -25,7 +24,11 @@ async function startMiner() {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			await postNewBlock(message.data)
 				.then((response) => {
-					result = response.ok
+					return response.json()
+				})
+				.then(json => {
+					console.log(json)
+					store.dispatch(fetchCoins())
 				})
 		}
 	})
@@ -38,12 +41,9 @@ async function startMiner() {
 
 const MiningPage = () => {
 
-	const dispatch = useDispatch()
-
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
-	const [coinFound, setCoinFound] = useState(false)
 
 	const startBtn = document.querySelector(".js-start")
 	const stopBtn = document.querySelector(".js-stop")
@@ -54,7 +54,6 @@ const MiningPage = () => {
 			if (miningStatus) await startMiner()
 				.catch(console.error)
 
-			if (result) setCoinFound(true)
 			setMiningStatus(false)
 
 		}
@@ -80,6 +79,7 @@ const MiningPage = () => {
 	useEffect(() => {
 		return () => {
 			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
+			console.log('ich mach alles weiß')
 			document.body.style.backgroundColor = '#ffffff'
 			workerInstance.terminate()
 		}
@@ -99,19 +99,6 @@ const MiningPage = () => {
 			return Pikachu_paused
 		}
 	}
-
-	useAsyncEffect(async () => {
-		if (coinFound) {
-			try {
-				dispatch(fetchCoins())
-			} catch (error) {
-				console.error(error)
-			} finally {
-				setCoinFound(false)
-			}
-		}
-	}, [coinFound])
-
 
 	return (
 		<div>

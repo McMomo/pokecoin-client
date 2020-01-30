@@ -13,12 +13,13 @@ export const calculateHash = (block) => {
 }
 
 export const mine = (prevHash, difficulty) => {
-	let timestamp = new Date().getTime()
+	console.log('Mining has started')
+	let timestamp = Date.now()
 	const max = Number.MAX_SAFE_INTEGER
 	let nonce = max / 2
 	let newBlock = ''
 
-	while (nonce < max) {
+	while (nonce <= max) {
 		nonce++
 		newBlock = {
 			previousHash: prevHash,
@@ -26,8 +27,16 @@ export const mine = (prevHash, difficulty) => {
 			data: BLOCK_DATA,
 			nonce: nonce
 		}
+
+		if(nonce === max) {
+			nonce = 0
+			timestamp = Date.now()
+		}
+
 		if (calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join(''))) {
-			return newBlock
+			self.postMessage(newBlock) // eslint-disable-line no-restricted-globals
+			return
 		}
 	}
+	console.log('out of the while loop')
 }
