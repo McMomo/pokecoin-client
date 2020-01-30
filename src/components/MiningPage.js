@@ -8,10 +8,10 @@ import Pikachu_paused from '../images/pokecoin_pikachu_paused.gif'
 import { pikachu_colors } from '../helpers/constants'
 import { useAsyncEffect } from 'use-async-effect'
 import { useSelector, useDispatch } from 'react-redux'
-import { userService } from '../services'
-import { shopActions } from '../actions'
+import { fetchCoins } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 import { Redirect } from 'react-router-dom'
+
 
 let workerInstance
 let result = false
@@ -23,9 +23,10 @@ async function startMiner() {
 	workerInstance.addEventListener('message', async (message) => {
 		if (message.data.type !== 'RPC') {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
-			const response = await postNewBlock(message.data)
-
-			result = response.ok
+			await postNewBlock(message.data)
+				.then((response) => {
+					result = response.ok
+				})
 		}
 	})
 
@@ -35,16 +36,10 @@ async function startMiner() {
 	workerInstance.terminate()
 }
 
-/* Activate 'Animation' */
-const triggerEevee = () => {
-	const eevee = document.querySelector(".topnav__coin")
-	DOMHelpers.activate(eevee)
-	setTimeout(() => {
-		DOMHelpers.deactivate(eevee)
-	}, 700)
-}
-
 const MiningPage = () => {
+
+	const dispatch = useDispatch()
+
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
@@ -105,19 +100,10 @@ const MiningPage = () => {
 		}
 	}
 
-	/* refreshs the wallet and trigger methode for eevee if coin found */
-	const dispatch = useDispatch()
-	const token = useSelector(state => state.authenticationReducer.token)
 	useAsyncEffect(async () => {
 		if (coinFound) {
 			try {
-				const response = await userService.fetchWalletBalance(token)
-				if (!response.ok) throw new Error(response.error)
-				const data = await response.json()
-				dispatch(shopActions.balanceSuccess(data.amount))
-
-				if (result && coinFound) triggerEevee()
-
+				dispatch(fetchCoins())
 			} catch (error) {
 				console.error(error)
 			} finally {

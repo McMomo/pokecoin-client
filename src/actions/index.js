@@ -1,2 +1,2 @@
 export * from './_authenticationAction'
-export * from './_shopAction'
+export * from './_coinAction'
