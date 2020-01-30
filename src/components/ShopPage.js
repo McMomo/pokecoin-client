@@ -11,8 +11,13 @@ import {
 } from '../services/_shopServices'
 import * as basicLightbox from 'basiclightbox'
 import Base from '../images/Charizard_Booster-2.png'
+import { useDispatch } from 'react-redux'
+import { fetchCoins } from '../actions'
 
 const ShopPage = () => {
+
+	const dispatch = useDispatch()
+
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [boosterNames, setBoosterNames] = useState([])
 	const [boosterPrice, setBoosterPrice] = useState([])
@@ -52,6 +57,7 @@ const ShopPage = () => {
 			}
 		}
 		asyncBuyBooster()
+		dispatch(fetchCoins())
 	}, [toBuyBooster])
 
 

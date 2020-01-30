@@ -25,7 +25,7 @@ export const getBoosterList = async () => {
 		const data = await handleResponse(response)
 		return data
 	} catch (errors) {
-		console.log("No Boosters are available")
+		console.error("No Boosters are available")
 	}
 }
 

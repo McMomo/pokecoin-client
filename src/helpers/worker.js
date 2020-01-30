@@ -13,7 +13,6 @@ export const calculateHash = (block) => {
 }
 
 export const mine = (prevHash, difficulty) => {
-	console.log('Mining has started')
 	let timestamp = Date.now()
 	const max = Number.MAX_SAFE_INTEGER
 	let nonce = max / 2

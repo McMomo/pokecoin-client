@@ -15,6 +15,15 @@ import { store } from '..'
 
 let workerInstance
 
+const triggerEevee = () => {
+	const eevee = document.querySelector('.topnav__coin')
+
+	DOMHelpers.activate(eevee)
+	eevee.addEventListener('transitionend', () => {
+		DOMHelpers.deactivate(eevee)
+	})
+}
+
 /* Mining and post-Request if Hash found */
 async function startMiner() {
 	workerInstance = worker()
@@ -28,8 +37,8 @@ async function startMiner() {
 					return response.json()
 				})
 				.then(json => {
-					console.log(json)
 					store.dispatch(fetchCoins())
+					triggerEevee()
 				})
 				.catch(error => {
 					console.error(error)
@@ -83,7 +92,6 @@ const MiningPage = () => {
 	useEffect(() => {
 		return () => {
 			//If a function is returned from useEffect, that function is invoked only when the component is removed from the DOM.
-			console.log('ich mach alles weiß')
 			document.body.style.backgroundColor = '#ffffff'
 			workerInstance.terminate()
 		}

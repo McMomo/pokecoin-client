@@ -22,7 +22,7 @@ export const coinActions = {
 
 export function fetchCoins() {
 
-	// Thunk Middleware can return functions
+	// With Thunk Middleware you can dispatch a function which dispatches actions
 	return function (dispatch) {
 
 		dispatch(requestCoins())
@@ -37,7 +37,7 @@ export function fetchCoins() {
 		return fetch(BASE_URL + '/wallet/balance', requestOptions)
 			.then(
 				response => response.json(),
-				error => console.log('An error occurred.', error)
+				error => console.error('An error occurred.', error)
 			)
 			.then(json =>
 				dispatch(receiveCoins(json))
