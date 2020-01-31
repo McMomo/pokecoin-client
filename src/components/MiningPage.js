@@ -18,10 +18,14 @@ let workerInstance
 const triggerEevee = () => {
 	const eevee = document.querySelector('.topnav__coin')
 
+	new Audio('../sounds/cash-register.mp3').play()
+
 	DOMHelpers.activate(eevee)
-	eevee.addEventListener('transitionend', () => {
+	eevee.addEventListener('animationend', () => {
 		DOMHelpers.deactivate(eevee)
 	})
+
+
 }
 
 /* Mining and post-Request if Hash found */
@@ -37,7 +41,7 @@ async function startMiner() {
 					return response.json()
 				})
 				.then(json => {
-					store.dispatch(fetchCoins())
+					store.dispatch(fetchCoins(store.getState().authenticationReducer.token))
 					triggerEevee()
 				})
 				.catch(error => {

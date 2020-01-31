@@ -1,5 +1,4 @@
 import { BASE_URL, coinConstants } from '../helpers/constants'
-import { store } from '../index'
 
 function requestCoins() {
 	return {
@@ -20,7 +19,7 @@ export const coinActions = {
 	receiveCoins
 }
 
-export function fetchCoins() {
+export function fetchCoins(token) {
 
 	// With Thunk Middleware you can dispatch a function which dispatches actions
 	return function (dispatch) {
@@ -31,7 +30,7 @@ export function fetchCoins() {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				'token': store.getState().authenticationReducer.token
+				'token': token
 			},
 		}
 		return fetch(BASE_URL + '/wallet/balance', requestOptions)

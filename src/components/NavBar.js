@@ -12,14 +12,16 @@ const NavBar = () => {
 
 	const coinAmount = useSelector(state => state.coinReducer.amount)
 
+	const token = useSelector(state => state.authenticationReducer.token)
+
 
 	const handleLogout = () => {
 		dispatch(authenticationActions.logout())
 	}
 
 	useEffect(() => {
-		dispatch(fetchCoins())
-	}, [dispatch])
+		if(loggedIn && token) dispatch(fetchCoins(token))
+	}, [dispatch, loggedIn, token])
 
 	return (
 
