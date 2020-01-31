@@ -12,7 +12,7 @@ import { store } from '..'
 import cashRegisterSound from '../sounds/cash-register.mp3'
 import Pikachu_searching from '../images/pokecoin_pikachu_searching.gif'
 import Pikachu_paused from '../images/pokecoin_pikachu_paused.gif'
-import {ToastsContainer, ToastsStore} from 'react-toasts';
+import {ToastsStore} from 'react-toasts';
 
 let workerInstance
 
@@ -35,16 +35,19 @@ async function startMiner() {
 
 		if (message.data.type !== 'RPC') {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
+			ToastsStore.info('Ein neuer Hash für einen Coin wurde gefunden')
 			await postNewBlock(message.data)
 				.then((response) => {
 					if(!response.ok) throw new Error("HTTP Status " + response.status)
 					return response.json()
 				})
 				.then(json => {
+					ToastsStore.success("Ein Coin wurde gefunden.")
 					store.dispatch(fetchCoins(store.getState().authenticationReducer.token))
 					triggerEevee()
 				})
 				.catch(error => {
+					ToastsStore.warning("Der gefundene Coin war nicht in Ordnung :(")
 					console.error(error)
 				})
 		}
@@ -115,30 +118,6 @@ const MiningPage = () => {
 			return Pikachu_paused
 		}
 	}
-
-	/* refreshs the wallet and trigger methode for eevee if coin found */
-	const dispatch = useDispatch()
-	const token = useSelector(state => state.authenticationReducer.token)
-	useAsyncEffect(async () => {
-		if (coinFound) {
-			ToastsStore.info('Ein neuer Hash für einen Coin wurde')
-			try {
-				const response = await userService.fetchWalletBalance(token)
-				if (!response.ok) throw new Error(response.error)
-				const data = await response.json()
-				dispatch(shopActions.balanceSuccess(data.amount))
-
-				if (result && coinFound) triggerEevee()
-				ToastsStore.success("Ein Coin wurde gefunden.")
-			} catch (error) {
-				console.error(error)
-				ToastsStore.warning("Der gefundene Coin war nicht in Ordnung :(")
-			} finally {
-				setCoinFound(false)
-			}
-		}
-	}, [coinFound])
-
 
 	return (
 		<div>

@@ -1,6 +1,6 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
-import { ToastsContainer, ToastsStore } from 'react-toasts';
+import { ToastsStore } from 'react-toasts';
 
 export const postNewBlock = async (newBlock) => {
 

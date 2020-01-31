@@ -4,8 +4,6 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { createStore } from 'redux'
-import { SnackbarProvider } from 'notistack';
 
 import 'basiclightbox/dist/basicLightbox.min.css'
 import './styles/main.scss'
