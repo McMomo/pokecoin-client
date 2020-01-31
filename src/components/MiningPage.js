@@ -12,7 +12,6 @@ import { userService } from '../services'
 import { shopActions } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 import { Redirect } from 'react-router-dom'
-
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 let workerInstance
@@ -140,7 +139,6 @@ const MiningPage = () => {
 				() => {
 					setRepeatMiningFlag(true)
 					setMiningStatus(true)
-					ToastsStore.success("Mining wurde gestartet.")
 				}
 			}>Start
 			</button>
@@ -149,7 +147,6 @@ const MiningPage = () => {
 					setRepeatMiningFlag(false)
 					setMiningStatus(false)
 					workerInstance.terminate()
-					ToastsStore.success("Mining wurde beendet.")
 				}
 			}>Stop
 			</button>

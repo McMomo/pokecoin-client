@@ -1,6 +1,5 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
-import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 const login = (username, password) => {
 
@@ -41,7 +40,6 @@ const fetchWalletBalance = async (token) => {
 			'token': token
 		},
 	}
-
 	return fetch(BASE_URL + '/wallet/balance', requestOptions)
 }
 
@@ -54,10 +52,8 @@ function handleResponse(response) {
 			}
 
 			const error = (data && data.message) || response.statusText
-			ToastsStore.warning("Vorgang war nicht erfolgreich.")
 			return Promise.reject(error)
 		}
-
 		return data
 	})
 }

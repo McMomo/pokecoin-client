@@ -7,9 +7,7 @@ import {
 	Link,
 	useParams
 } from 'react-router-dom'
-import {
-	getBooster
-} from '../services/_shopServices';
+import { getBooster } from '../services/_shopServices';
 
 const BoosterDetails = () => {
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)

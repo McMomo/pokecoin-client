@@ -126,9 +126,7 @@ const CardsPage = () => {
 					}
 					{isLoading ? <div className='cardPage__loader js-loader'><Pokeball /></div> : ''}
 				</div>
-
 			</div>
-
 		</div>
 	)
 }

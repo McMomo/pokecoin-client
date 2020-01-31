@@ -1,6 +1,6 @@
 import { BASE_URL } from '../helpers/constants'
 import Cookies from 'js-cookie'
-import {ToastsContainer, ToastsStore} from 'react-toasts';
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 
 export const getBuyNewBooster = (boosterName) => {
 	const token = Cookies.get('token')
@@ -56,7 +56,6 @@ function handleResponse(response) {
 			const error = (data && data.message) || response.statusText
 			return Promise.reject(error)
 		}
-
 		return data
 	})
 }
