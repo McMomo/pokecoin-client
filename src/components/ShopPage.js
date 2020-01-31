@@ -18,6 +18,8 @@ const ShopPage = () => {
 
 	const dispatch = useDispatch()
 
+	const token = useSelector(state => state.authenticationReducer.token)
+
 	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
 	const [boosterNames, setBoosterNames] = useState([])
 	const [boosterPrice, setBoosterPrice] = useState([])
@@ -57,7 +59,7 @@ const ShopPage = () => {
 			}
 		}
 		asyncBuyBooster()
-		dispatch(fetchCoins())
+		dispatch(fetchCoins(token))
 	}, [toBuyBooster])
 
 
