@@ -65,9 +65,6 @@ const MiningPage = () => {
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
 
-	const startBtn = document.querySelector(".js-start")
-	const stopBtn = document.querySelector(".js-stop")
-
 	/* Starts the miner and checks for repeat */
 	useEffect(() => {
 		async function asyncMiner() {
@@ -108,13 +105,9 @@ const MiningPage = () => {
 	const getMiningPageImg = () => {
 		if (reapeatMiningFlag) {
 			document.body.style.backgroundColor = pikachu_colors.SEARCHING
-			DOMHelpers.deactivate(stopBtn)
-			DOMHelpers.activate(startBtn)
 			return Pikachu_searching
 		} else {
 			document.body.style.backgroundColor = pikachu_colors.PAUSED
-			DOMHelpers.deactivate(startBtn)
-			DOMHelpers.activate(stopBtn)
 			return Pikachu_paused
 		}
 	}
@@ -124,14 +117,14 @@ const MiningPage = () => {
 			{!loggedIn ? <Redirect to='/login' /> : ''}
 			<img className="mining__img" src={getMiningPageImg()} alt="Pikachu is having a break, with KITKAT(C)" />
 
-			<button className="mining__button js-start" onClick={
+			<button className={miningStatus ? 'mining__button active' : 'mining__button'} onClick={
 				() => {
 					setRepeatMiningFlag(true)
 					setMiningStatus(true)
 				}
 			}>Start
 			</button>
-			<button className="mining__button js-stop" onClick={
+			<button className={!miningStatus ? 'mining__button active' : 'mining__button'} onClick={
 				() => {
 					setRepeatMiningFlag(false)
 					setMiningStatus(false)
