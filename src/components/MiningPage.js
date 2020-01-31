@@ -3,28 +3,26 @@ import worker from 'workerize-loader!../helpers/worker' // eslint-disable-line i
 import { getDifficulty, getPrevHash } from '../services/_miningServices'
 import { postNewBlock } from '../services/_miningServices'
 import { calculateHash } from '../helpers/worker'
-import Pikachu_searching from '../images/pokecoin_pikachu_searching.gif'
-import Pikachu_paused from '../images/pokecoin_pikachu_paused.gif'
 import { pikachu_colors } from '../helpers/constants'
 import { useSelector } from 'react-redux'
 import { fetchCoins } from '../actions'
 import { DOMHelpers } from '../helpers/domhelpers'
 import { Redirect } from 'react-router-dom'
 import { store } from '..'
-
+import cashRegisterSound from '../sounds/cash-register.mp3'
+import Pikachu_searching from '../images/pokecoin_pikachu_searching.gif'
+import Pikachu_paused from '../images/pokecoin_pikachu_paused.gif'
 
 let workerInstance
 
 const triggerEevee = () => {
 	const eevee = document.querySelector('.topnav__coin')
-
-	new Audio('../sounds/cash-register.mp3').play()
-
+	const audio = new Audio(cashRegisterSound)
+	audio.play()
 	DOMHelpers.activate(eevee)
 	eevee.addEventListener('animationend', () => {
 		DOMHelpers.deactivate(eevee)
 	})
-
 
 }
 
@@ -33,6 +31,7 @@ async function startMiner() {
 	workerInstance = worker()
 
 	workerInstance.addEventListener('message', async (message) => {
+
 		if (message.data.type !== 'RPC') {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			await postNewBlock(message.data)
