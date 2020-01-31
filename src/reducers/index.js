@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import { authenticationReducer } from './_authenticationReducer'
-import { shopReducer } from './_shopreducer'
+import { coinReducer } from './_coinReducer'
 
 export const reducers = combineReducers({
 	authenticationReducer,
-	shopReducer
+	coinReducer
 })

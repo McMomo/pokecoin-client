@@ -11,10 +11,9 @@ export const authenticationConstants = {
 	REGISTER_FAILURE: 'REGISTER_FAILURE'
 }
 
-export const shopConstants = {
-	BALANCE_REQUEST: 'BALANCE_REQUEST',
-	BALANCE_SUCCESS: 'BALANCE_SUCCESS',
-	BALANCE_FAILURE: 'BALANCE_FAILURE'
+export const coinConstants = {
+	REQUEST_COINS: 'REQUEST_COINS',
+	RECEIVE_COINS: 'RECEIVE_COINS'
 }
 
 export const pikachu_colors = {

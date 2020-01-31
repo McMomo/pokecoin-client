@@ -12,13 +12,13 @@ export const calculateHash = (block) => {
 	return crypto.createHash('sha256').update(information).digest('hex')
 }
 
-export const mine = async (prevHash, difficulty) => {
-	let timestamp = new Date().getTime()
+export const mine = (prevHash, difficulty) => {
+	let timestamp = Date.now()
 	const max = Number.MAX_SAFE_INTEGER
 	let nonce = max / 2
 	let newBlock = ''
 
-	while (nonce < max) {
+	while (nonce <= max) {
 		nonce++
 		newBlock = {
 			previousHash: prevHash,
@@ -26,9 +26,15 @@ export const mine = async (prevHash, difficulty) => {
 			data: BLOCK_DATA,
 			nonce: nonce
 		}
+
+		if(nonce === max) {
+			nonce = 0
+			timestamp = Date.now()
+		}
+
 		if (calculateHash(newBlock).startsWith(Array(difficulty).fill(0).join(''))) {
 			self.postMessage(newBlock) // eslint-disable-line no-restricted-globals
-			break
-		} 
+			return
+		}
 	}
 }

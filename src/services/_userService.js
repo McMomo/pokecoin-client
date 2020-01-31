@@ -31,18 +31,6 @@ const register = (username, password) => {
 		})
 }
 
-const fetchWalletBalance = async (token) => {
-
-	const requestOptions = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'token': token
-		},
-	}
-	return fetch(BASE_URL + '/wallet/balance', requestOptions)
-}
-
 function handleResponse(response) {
 	return response.text().then(text => {
 		const data = text && JSON.parse(text)
@@ -60,6 +48,5 @@ function handleResponse(response) {
 
 export const userService = {
 	login,
-	register,
-	fetchWalletBalance
+	register
 }
