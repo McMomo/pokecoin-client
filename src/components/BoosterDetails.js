@@ -8,18 +8,19 @@ import {
 	useParams
 } from 'react-router-dom'
 import { shopService } from '../services';
+import Pokeball from './PokeBall'
 
 const BoosterDetails = () => {
-
+	const [isLoading, setLoading] = useState(false)
 	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
-
 	let { boosterName } = useParams();
-
 	const [booster, setBooster] = useState([])
 
 	useAsyncEffect(async () => {
+		setLoading(true)
 		const booster = await shopService.getBooster(boosterName)
 		setBooster(booster.cards)
+		setLoading(false)
 	}, [])
 
 	const boosterCards = booster.map(cards => (
@@ -31,8 +32,11 @@ const BoosterDetails = () => {
 			{!loggedIn ? <Redirect to='/login' /> : ''}
 			<div className='boosterDetails__allCards'>
 				{boosterCards}
+				{isLoading ? <div className='boosterDetails__loader'><Pokeball /></div> : ''}		
 			</div>
-			<Link to={`/shop`} className='boosterDetails__backButton'>Go Back</ Link>
+			<div className='boosterDetails__textWrapper'>
+				<Link to={`/shop`} className='boosterDetails__backButton'>Go Back</ Link>
+			</div>
 		</div>
 	)
 }
