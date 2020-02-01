@@ -14,11 +14,6 @@ function receiveCoins(json) {
 	}
 }
 
-export const coinActions = {
-	requestCoins,
-	receiveCoins
-}
-
 export function fetchCoins(token) {
 
 	// With Thunk Middleware you can dispatch a function which dispatches actions

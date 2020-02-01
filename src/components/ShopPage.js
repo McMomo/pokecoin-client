@@ -18,9 +18,9 @@ const ShopPage = () => {
 
 	const dispatch = useDispatch()
 
-	const token = useSelector(state => state.authenticationReducer.token)
+	const token = useSelector(state => state.loginReducer.token)
 
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
 	const [boosterNames, setBoosterNames] = useState([])
 	const [boosterPrice, setBoosterPrice] = useState([])
 	const [boughtCards, setBoughtCards] = useState([])

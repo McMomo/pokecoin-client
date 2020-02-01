@@ -3,16 +3,12 @@ import { useState } from 'react'
 import { useAsyncEffect } from 'use-async-effect'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import {
-	fetchCards,
-	fetchUserCards,
-	fetchOneCard
-} from '../services/_cardsServices'
+import { cardService } from '../services/_cardService'
 import Card from './Card'
 import Pokeball from './PokeBall'
 
 const CardsPage = () => {
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
 	const [cards, setCards] = useState([]) // All cards of one page
 	const [showUserCards, setShowUserCards] = useState(true) // Checks what cards should be shown (false=all or true=user)
 	const [currentPage, setCurrentPage] = useState(0) // Current page of all Cards
@@ -21,18 +17,18 @@ const CardsPage = () => {
 
 	//Gets the cards from currentPage+1 and checks if there are cards
 	const checkIfNextPageExists = async () => {
-		const cards = await fetchCards(currentPage + 1)
+		const cards = await cardService.fetchCards(currentPage + 1)
 		setNextPageExists(cards.length > 0 ? true : false)
 	}
 
 	//Gets UserCards from BE
 	const getUserCards = async () => {
 		setCards([])
-		const userCards = await fetchUserCards()
+		const userCards = await cardService.fetchUserCards()
 		let cards = []
-
+		if(!userCards) return
 		for (let i = 0; i < userCards.length; i++) {
-			const card = await fetchOneCard(userCards[i].cardId)
+			const card = await cardService.fetchOneCard(userCards[i].cardId)
 			cards.push(card)
 		}
 		setCards(cards)
@@ -41,7 +37,7 @@ const CardsPage = () => {
 	//Gets all cards from a given Page from BE
 	const getPaginatedCards = async () => {
 		setCards([])
-		const cards = await fetchCards(currentPage)
+		const cards = await cardService.fetchCards(currentPage)
 		setCards(cards)
 	}
 

@@ -1,20 +1,18 @@
 import React from 'react'
 import { useState } from 'react'
 import Pokeball from './PokeBall'
-import { authenticationActions } from '../actions'
-import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { register } from '../services/_registrationService'
+import { httpStatus } from '../helpers/constants'
 
 const RegistrationPage = (props) => {
 
-	const dispatch = useDispatch()
 
-	const registrationComplete = useSelector(state => state.authenticationReducer.registrationComplete)
-	const error = useSelector(state => state.authenticationReducer.error)
-
+	const [error, setError] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const [submitted, setSubmitted] = useState(false)
+	const [registrationSuccessful, setRegistrationSuccessful] = useState(false)
 
 	const handleChange = e => {
 		const { name, value } = e.target
@@ -35,13 +33,27 @@ const RegistrationPage = (props) => {
 		e.preventDefault()
 		if (username && password) {
 			setSubmitted(true)
-			dispatch(authenticationActions.registerRequest(username, password))
+			register(username, password)
+				.then(response => {
+					if(response.status === httpStatus.OK) {
+						setRegistrationSuccessful(true)
+					}
+					else if(response.status === httpStatus.BAD_REQUEST) {
+						throw new Error('Username already exists')
+					}
+					else
+						throw new Error('Something went wrong')
+				})
+				.catch(error => {
+					setError(error.message)
+					setSubmitted(false)
+				})
 		}
 	}
 
 	return (
 		<div className='login'>
-			{registrationComplete ? <Redirect to='/login' /> : ''}
+			{registrationSuccessful ? <Redirect to='/login' /> : ''}
 			<div className='login__background login__background--register'></div>
 			<form className='login__form'>
 				<input className='login__input js-username' type='text' placeholder='Username' name='username' onChange={handleChange} />

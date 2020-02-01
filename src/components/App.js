@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Cookies from 'js-cookie'
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -16,8 +17,22 @@ import NotFoundPage from './NotFoundPage'
 
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {ToastsContainerPosition} from 'react-toasts'
+import { useSelector } from 'react-redux'
 
 function App() {
+
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
+	const token = useSelector(state => state.loginReducer.token)
+
+	useEffect(() => {
+		if(loggedIn && token !== null) {
+			Cookies.set('token', token)
+		} else {
+			Cookies.remove('token', { path: ''})
+		}
+
+	}, [token, loggedIn])
+
 	return (
 		<Router>
 			<NavBar />
@@ -45,7 +60,7 @@ function App() {
 				</Route>
 				<Route component={NotFoundPage} />
 			</Switch>
-			<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} lightBackground/>
+			<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.BOTTOM_RIGHT} lightBackground/>
 		</Router>
 	)
 }

@@ -1,9 +1,9 @@
 import { BASE_URL } from '../helpers/constants'
-import Cookies from 'js-cookie'
 import { ToastsStore } from 'react-toasts';
+import { store } from '..';
 
 export const getBuyNewBooster = (boosterName) => {
-	const token = Cookies.get('token')
+	const token = store.getState().loginReducer.token
 	const requestOptions = {
 		method: 'GET',
 		headers: {

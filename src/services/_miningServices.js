@@ -1,10 +1,10 @@
 import { BASE_URL } from '../helpers/constants'
-import Cookies from 'js-cookie'
 import { ToastsStore } from 'react-toasts';
+import { store } from '..';
 
-export const postNewBlock = async (newBlock) => {
+const postNewBlock = async (newBlock) => {
 
-	const token = Cookies.get('token')
+	const token = store.getState().loginReducer.token
 
 	const requestOptions = {
 		method: 'POST',
@@ -23,7 +23,7 @@ export const postNewBlock = async (newBlock) => {
 	}
 }
 
-export const getDifficulty = async () => {
+const getDifficulty = async () => {
 	try {
 		const response = await fetch(BASE_URL + '​/blockchain/currentDifficulty')
 		const data = await handleResponse(response)
@@ -33,7 +33,7 @@ export const getDifficulty = async () => {
 	}
 }
 
-export const getPrevHash = async () => {
+const getPrevHash = async () => {
 	try {
 		const response = await fetch(BASE_URL + '/blockchain/lastBlock')
 		const data = await handleResponse(response)
@@ -57,4 +57,10 @@ async function handleResponse(response) {
 		throw error
 	}
 	return data
+}
+
+export const miningService = {
+	postNewBlock,
+	getDifficulty,
+	getPrevHash
 }

@@ -1,16 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
 import Pokeball from './PokeBall'
-import { authenticationActions } from '../actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
+import { authenticationActions } from '../actions'
 
 const LoginPage = (props) => {
 
 	const dispatch = useDispatch()
 
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
-	const error = useSelector(state => state.authenticationReducer.error)
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
+	const error = useSelector(state => state.loginReducer.error)
 
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
@@ -35,7 +35,7 @@ const LoginPage = (props) => {
 		e.preventDefault()
 		if (username && password) {
 			setSubmitted(true)
-			dispatch(authenticationActions.loginRequest(username, password))
+			dispatch(authenticationActions.login(username, password))
 		}
 	}
 

@@ -10,8 +10,11 @@ import {
 import { getBooster } from '../services/_shopServices';
 
 const BoosterDetails = () => {
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
+
 	let { boosterName } = useParams();
+
 	const [booster, setBooster] = useState([])
 
 	useAsyncEffect(async () => {

@@ -1,11 +1,11 @@
 import React from 'react'
-import { fetchOneCard } from '../services/_cardsServices'
+import { cardService } from '../services/_cardService'
 import ReactDOMServer from 'react-dom/server'
 import { supertypes } from '../helpers/constants'
 
 const CardDetails = async (props) => {
 
-	const card = await fetchOneCard(props.id)
+	const card = await cardService.fetchOneCard(props.id)
 	let html = ''
 
 	if (card.supertype === supertypes.TRAINER) {

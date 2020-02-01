@@ -8,11 +8,11 @@ const NavBar = () => {
 
 	const dispatch = useDispatch()
 
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
 
 	const coinAmount = useSelector(state => state.coinReducer.amount)
 
-	const token = useSelector(state => state.authenticationReducer.token)
+	const token = useSelector(state => state.loginReducer.token)
 
 
 	const handleLogout = () => {

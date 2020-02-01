@@ -1,16 +1,17 @@
 import { BASE_URL } from '../helpers/constants'
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import { ToastsStore } from 'react-toasts';
+import { store } from '..';
 
-export const fetchCards = async (page) => {
+const fetchCards = async (page) => {
 	const list = await axios.get(BASE_URL + `/cards?page=${page}`)
 							.catch(error => {ToastsStore.warning("Eigene Karten konnten nicht geladen werden.")})
 	return list.data.cards
 }
 
-export const fetchUserCards = async () => {
-	const token = Cookies.get('token')
+const fetchUserCards = async () => {
+	const token = store.getState().loginReducer.token
+	if(token === null) return
 	const requestOptions = {
 		method: 'GET',
 		headers: {
@@ -26,8 +27,14 @@ export const fetchUserCards = async () => {
 		.catch(error => {ToastsStore.warning("Eigene Karten konnten nicht geladen werden.")})
 }
 
-export const fetchOneCard = async (cardId) => {
+const fetchOneCard = async (cardId) => {
 	const list = await axios.get(BASE_URL + `/cards/${ cardId }`)
 							.catch(error => {ToastsStore.warning("Eigene Karten konnten nicht geladen werden.")})
 	return list.data.card
+}
+
+export const cardService = {
+	fetchCards,
+	fetchUserCards,
+	fetchOneCard
 }

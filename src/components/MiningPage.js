@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import worker from 'workerize-loader!../helpers/worker' // eslint-disable-line import/no-webpack-loader-syntax
-import { getDifficulty, getPrevHash } from '../services/_miningServices'
-import { postNewBlock } from '../services/_miningServices'
+import { miningService } from '../services/_miningServices'
 import { calculateHash } from '../helpers/worker'
 import { pikachu_colors } from '../helpers/constants'
 import { useSelector } from 'react-redux'
@@ -24,7 +23,6 @@ const triggerEevee = () => {
 	eevee.addEventListener('animationend', () => {
 		DOMHelpers.deactivate(eevee)
 	})
-
 }
 
 /* Mining and post-Request if Hash found */
@@ -36,14 +34,14 @@ async function startMiner() {
 		if (message.data.type !== 'RPC') {
 			console.log('%c New Hash found: ' + calculateHash(message.data), 'color: blue')
 			ToastsStore.info('Ein neuer Hash für einen Coin wurde gefunden')
-			await postNewBlock(message.data)
+			await miningService.postNewBlock(message.data)
 				.then((response) => {
 					if(!response.ok) throw new Error("HTTP Status " + response.status)
 					return response.json()
 				})
 				.then(json => {
 					ToastsStore.success("Ein Coin wurde gefunden.")
-					store.dispatch(fetchCoins(store.getState().authenticationReducer.token))
+					store.dispatch(fetchCoins(store.getState().loginReducer.token))
 					triggerEevee()
 				})
 				.catch(error => {
@@ -53,15 +51,15 @@ async function startMiner() {
 		}
 	})
 
-	const prevHash = await getPrevHash()
-	const getDiff = await getDifficulty()
+	const prevHash = await miningService.getPrevHash()
+	const getDiff = await miningService.getDifficulty()
 	await workerInstance.mine(prevHash, getDiff)
 	workerInstance.terminate()
 }
 
 const MiningPage = () => {
 
-	const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+	const loggedIn = useSelector(state => state.loginReducer.loggedIn)
 	const [miningStatus, setMiningStatus] = useState(true)
 	const [reapeatMiningFlag, setRepeatMiningFlag] = useState(true)
 
