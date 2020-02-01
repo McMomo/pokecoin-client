@@ -2,7 +2,7 @@ import { BASE_URL } from '../helpers/constants'
 import { ToastsStore } from 'react-toasts';
 import { store } from '..';
 
-export const getBuyNewBooster = (boosterName) => {
+const getBuyNewBooster = (boosterName) => {
 	const token = store.getState().loginReducer.token
 	const requestOptions = {
 		method: 'GET',
@@ -19,7 +19,7 @@ export const getBuyNewBooster = (boosterName) => {
 		})
 }
 
-export const getBoosterList = async () => {
+const getBoosterList = async () => {
 	try {
 		const response = await fetch(BASE_URL + `/cards/packages`)
 		const data = await handleResponse(response)
@@ -29,7 +29,7 @@ export const getBoosterList = async () => {
 	}
 }
 
-export const getBooster = async (boosterName) => {
+const getBooster = async (boosterName) => {
 	try {
 		const response = await fetch(BASE_URL + `/cards/packages/${ boosterName }`)
 		const data = await handleResponse(response)
@@ -39,7 +39,7 @@ export const getBooster = async (boosterName) => {
 	}
 }
 
-export const getBoosterPrice = async () => {
+const getBoosterPrice = async () => {
 	try {
 		const response = await fetch(BASE_URL + `/cards/packages/currentPackageCost`)
 		const data = await handleResponse(response)
@@ -58,4 +58,11 @@ function handleResponse(response) {
 		}
 		return data
 	})
+}
+
+export const shopService = {
+	getBuyNewBooster,
+	getBoosterList,
+	getBooster,
+	getBoosterPrice
 }

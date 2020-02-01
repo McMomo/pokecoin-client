@@ -4,11 +4,7 @@ import { useSelector } from 'react-redux'
 import { useAsyncEffect } from 'use-async-effect'
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import {
-	getBoosterList,
-	getBoosterPrice,
-	getBuyNewBooster
-} from '../services/_shopServices'
+import { shopService } from '../services'
 import * as basicLightbox from 'basiclightbox'
 import Base from '../images/Charizard_Booster-2.png'
 import { useDispatch } from 'react-redux'
@@ -27,12 +23,12 @@ const ShopPage = () => {
 	const [toBuyBooster, settoBuyBooster] = useState([])
 
 	useAsyncEffect(async () => {
-		const boosterNames = await getBoosterList()
+		const boosterNames = await shopService.getBoosterList()
 		setBoosterNames(boosterNames)
 	}, [])
 
 	useAsyncEffect(async () => {
-		const boosterPrice = await getBoosterPrice()
+		const boosterPrice = await shopService.getBoosterPrice()
 		setBoosterPrice(boosterPrice)
 	}, [])
 
@@ -53,7 +49,7 @@ const ShopPage = () => {
 	useAsyncEffect(() => {
 		async function asyncBuyBooster() {
 			if (toBuyBooster.length > 0) {
-				const newBooster = await getBuyNewBooster(toBuyBooster)
+				const newBooster = await shopService.getBuyNewBooster(toBuyBooster)
 				setBoughtCards(newBooster.cards)
 				settoBuyBooster([])
 			}

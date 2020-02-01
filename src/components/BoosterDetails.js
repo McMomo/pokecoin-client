@@ -7,7 +7,7 @@ import {
 	Link,
 	useParams
 } from 'react-router-dom'
-import { getBooster } from '../services/_shopServices';
+import { shopService } from '../services';
 
 const BoosterDetails = () => {
 
@@ -18,7 +18,7 @@ const BoosterDetails = () => {
 	const [booster, setBooster] = useState([])
 
 	useAsyncEffect(async () => {
-		const booster = await getBooster(boosterName)
+		const booster = await shopService.getBooster(boosterName)
 		setBooster(booster.cards)
 	}, [])
 

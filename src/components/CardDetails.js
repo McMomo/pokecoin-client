@@ -1,5 +1,5 @@
 import React from 'react'
-import { cardService } from '../services/_cardService'
+import { cardService } from '../services'
 import ReactDOMServer from 'react-dom/server'
 import { supertypes } from '../helpers/constants'
 

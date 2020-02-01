@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import Pokeball from './PokeBall'
 import { Redirect } from 'react-router-dom'
-import { register } from '../services/_registrationService'
+import { register } from '../services'
 import { httpStatus } from '../helpers/constants'
 
 const RegistrationPage = (props) => {

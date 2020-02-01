@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useAsyncEffect } from 'use-async-effect'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { cardService } from '../services/_cardService'
+import { cardService } from '../services'
 import Card from './Card'
 import Pokeball from './PokeBall'
 

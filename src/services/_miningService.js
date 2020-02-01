@@ -29,7 +29,7 @@ const getDifficulty = async () => {
 		const data = await handleResponse(response)
 		return data
 	} catch (error) {
-		ToastsStore.warning("Aktuell difficulty für das minen wurde nicht gefunden..")
+		ToastsStore.warning("Aktuelle difficulty für das minen wurde nicht gefunden..")
 	}
 }
 
@@ -40,7 +40,7 @@ const getPrevHash = async () => {
 		return data.hash
 	}
 	catch (error) {
-		ToastsStore.warning("Vorherige Hash wurde nicht gefunden.")
+		ToastsStore.warning("Vorheriger Hash wurde nicht gefunden.")
 	}
 }
 

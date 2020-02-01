@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import worker from 'workerize-loader!../helpers/worker' // eslint-disable-line import/no-webpack-loader-syntax
-import { miningService } from '../services/_miningServices'
+import { miningService } from '../services'
 import { calculateHash } from '../helpers/worker'
 import { pikachu_colors } from '../helpers/constants'
 import { useSelector } from 'react-redux'
@@ -45,7 +45,7 @@ async function startMiner() {
 					triggerEevee()
 				})
 				.catch(error => {
-					ToastsStore.warning("Der gefundene Coin war nicht in Ordnung :(")
+					ToastsStore.warning("Der gefundene Hash war nicht in Ordnung :(")
 					console.error(error)
 				})
 		}
